@@ -1,0 +1,31 @@
+---
+import '../styles/global.css';
+import { url } from '../lib/data';
+
+interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site).href} />
+    <meta name="twitter:card" content="summary" />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href} />
+    <link rel="sitemap" href={url("/sitemap-index.xml")} />
+    {/* TODO: favicon and OG image not designed yet (suggest blue "RJ" badge). Ask owner. */}
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

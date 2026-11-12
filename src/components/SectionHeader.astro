@@ -1,0 +1,25 @@
+---
+import Lines from './Lines.astro';
+interface Props {
+  overline: string;
+  heading: string;
+  description?: string;
+  inverse?: boolean;
+}
+const { overline, heading, description, inverse = false } = Astro.props;
+---
+
+<div class="flex flex-col gap-4 md:gap-6">
+  <p class:list={['flex items-center gap-2 text-[12px] font-semibold uppercase leading-[1.2] tracking-[0.08em] md:text-[13px]', inverse ? 'text-blue-300' : 'text-accent']}>
+    <span class:list={['size-2 rounded-full', inverse ? 'bg-blue-300' : 'bg-accent']} aria-hidden="true"></span>
+    {overline}
+  </p>
+  <h2 class:list={['font-display font-bold leading-[1.02] tracking-[-0.025em] text-[32px] md:text-[56px]', inverse ? 'text-on-inverse' : 'text-ink']}>
+    <Lines text={heading} />
+  </h2>
+  {description && (
+    <p class:list={['max-w-[640px] text-[16px] leading-[1.6] md:text-[18px]', inverse ? 'text-neutral-300' : 'text-ink-2']}>
+      {description}
+    </p>
+  )}
+</div>

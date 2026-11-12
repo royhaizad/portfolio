@@ -1,0 +1,58 @@
+---
+import { Image } from 'astro:assets';
+import { img } from '../lib/data';
+interface Props {
+  kind: 'browser' | 'phone' | 'video';
+  image: string;
+  alt: string;
+  priority?: boolean;
+}
+const { kind, image, alt, priority = false } = Astro.props;
+const src = img(image);
+const loading = priority ? 'eager' : 'lazy';
+---
+
+{kind === 'browser' && (
+  <figure class="overflow-hidden rounded-md border border-line bg-surface shadow-card-rest">
+    <div class="flex items-center gap-2 border-b border-line bg-surface-alt px-4 py-3" aria-hidden="true">
+      <span class="size-3 rounded-full bg-neutral-200"></span>
+      <span class="size-3 rounded-full bg-neutral-200"></span>
+      <span class="size-3 rounded-full bg-neutral-200"></span>
+    </div>
+    {/* Desktop crops top-aligned; mobile shows the full image aspect. */}
+    <Image
+      src={src}
+      alt={alt}
+      widths={[640, 960, 1280, 1600]}
+      sizes="(min-width: 1280px) 1280px, 100vw"
+      loading={loading}
+      class="block h-auto w-full md:aspect-[16/10] md:object-cover md:object-top"
+    />
+  </figure>
+)}
+
+{kind === 'phone' && (
+  <figure class="mx-auto w-full max-w-[320px] overflow-hidden rounded-[40px] border-[8px] border-ink bg-ink shadow-card-rest">
+    <Image
+      src={src}
+      alt={alt}
+      widths={[320, 480, 640]}
+      sizes="320px"
+      loading={loading}
+      class="block h-auto w-full rounded-[32px]"
+    />
+  </figure>
+)}
+
+{kind === 'video' && (
+  <figure class="overflow-hidden rounded-md border border-line bg-ink shadow-card-rest">
+    <Image
+      src={src}
+      alt={alt}
+      widths={[640, 960, 1280]}
+      sizes="(min-width: 1280px) 1280px, 100vw"
+      loading={loading}
+      class="block aspect-video w-full object-cover"
+    />
+  </figure>
+)}

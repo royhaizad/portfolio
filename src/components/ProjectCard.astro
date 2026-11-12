@@ -1,0 +1,49 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import Tag from './Tag.astro';
+import Lines from './Lines.astro';
+import { img, url, type TagData } from '../lib/data';
+
+interface Props {
+  slug: string;
+  cardImage: string;
+  number: string;
+  title: string;
+  meta: string;
+  description: string;
+  tags: TagData[];
+  size?: 'featured' | 'standard';
+}
+const { slug, cardImage, number, title, meta, description, tags, size = 'featured' } = Astro.props;
+const featured = size === 'featured';
+---
+
+<a
+  href={url(`/work/${slug}`)}
+  class="group flex flex-col overflow-hidden rounded-lg border border-line bg-surface shadow-card-rest transition-shadow duration-[400ms] hover:shadow-card-hover"
+>
+  <div class="relative overflow-hidden bg-surface-alt">
+    <Image
+      src={img(cardImage)}
+      alt={`${title.replace('⏎', ' ')}: desktop and mobile screens`}
+      widths={[640, 960, 1280]}
+      sizes={featured ? '(min-width: 1280px) 1280px, 100vw' : '(min-width: 768px) 640px, 100vw'}
+      class="aspect-[16/9] w-full object-cover transition-transform duration-[400ms] ease-out group-hover:scale-105"
+    />
+    <span class="absolute left-4 top-4 grid h-10 min-w-10 place-items-center rounded-full bg-surface px-3 text-[14px] font-semibold md:left-6 md:top-6">{number}</span>
+    <span class="absolute bottom-4 right-4 grid size-14 translate-y-2 place-items-center rounded-full bg-accent text-white opacity-0 transition-all duration-[400ms] group-hover:translate-y-0 group-hover:opacity-100 md:bottom-6 md:right-6" aria-hidden="true">
+      <Icon name="arrow-up-right" size={24} />
+    </span>
+  </div>
+  <div class="flex flex-col gap-4 p-5 md:p-8">
+    <p class="text-[12px] font-semibold uppercase tracking-[0.08em] text-ink-2">{meta}</p>
+    <h3 class:list={['font-display font-bold leading-[1.1] tracking-[-0.02em] transition-colors duration-[400ms] group-hover:text-accent', featured ? 'text-[28px] md:text-[40px]' : 'text-[24px] md:text-[32px]']}>
+      <Lines text={title} />
+    </h3>
+    <p class="max-w-[720px] text-[15px] leading-[1.55] text-ink-2 md:text-[18px]">{description}</p>
+    <div class="flex flex-wrap gap-2">
+      {tags.map((t) => <Tag type={t.type as any} label={t.label} />)}
+    </div>
+  </div>
+</a>

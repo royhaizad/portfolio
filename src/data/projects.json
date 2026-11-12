@@ -1,0 +1,1087 @@
+{
+  "filterOptions": {
+    "type": [
+      "Website",
+      "Microsite",
+      "System & portal",
+      "Dashboard",
+      "Motion & video"
+    ],
+    "sector": [
+      "Government",
+      "Transportation",
+      "Corporate",
+      "Infrastructure",
+      "Enterprise",
+      "Fintech",
+      "Plantation",
+      "Emergency services",
+      "Higher education",
+      "Marketing",
+      "Design studio"
+    ]
+  },
+  "projects": [
+    {
+      "case": "01",
+      "slug": "ecological-network-website-revamp",
+      "title": "Ecological Network Website Revamp",
+      "overline": "Case study 01 · Conservation",
+      "summary": "A storytelling-led revamp for a national conservation programme. I explored three concept directions, structured the site as a narrative, and drafted Hi-Fi screens with an AI-assisted workflow tied to the design library.",
+      "tags": [
+        {
+          "type": "Lead",
+          "label": "Lead the project"
+        },
+        {
+          "type": "Launched",
+          "label": "Launched"
+        },
+        {
+          "type": "AI",
+          "label": "AI-utilized"
+        },
+        {
+          "type": "Responsive",
+          "label": "Responsive"
+        },
+        {
+          "type": "Design System",
+          "label": "WordPress"
+        },
+        {
+          "type": "Government",
+          "label": "Government"
+        },
+        {
+          "type": "Tool",
+          "label": "Claude"
+        },
+        {
+          "type": "Tool",
+          "label": "Figma"
+        }
+      ],
+      "meta": [
+        {
+          "label": "Role",
+          "value": "Lead UI/UX Designer"
+        },
+        {
+          "label": "Sector",
+          "value": "Government · Conservation"
+        },
+        {
+          "label": "Platform",
+          "value": "Responsive website"
+        },
+        {
+          "label": "Status",
+          "value": "Launched"
+        }
+      ],
+      "live": [
+        {
+          "label": "Visit live site",
+          "url": "https://cfs.forestry.gov.my/"
+        }
+      ],
+      "hero": "screenshots/s01_hero.png",
+      "showcase": [
+        {
+          "frame": "browser",
+          "image": "screenshots/s01_inner.png"
+        },
+        {
+          "frame": "phone",
+          "image": "screenshots/s01_mob.png"
+        }
+      ],
+      "cardImage": "mockups/mockup-01.png",
+      "template": "full",
+      "featured": {
+        "number": "01",
+        "title": "Ecological Network⏎Website Revamp",
+        "meta": "Government · Conservation website",
+        "description": "Three visual concept directions and storytelling-led UX for a national conservation programme, drafted with an AI-assisted Hi-Fi workflow.",
+        "tags": [
+          {
+            "type": "Lead",
+            "label": "Lead the project"
+          },
+          {
+            "type": "Launched",
+            "label": "Launched"
+          },
+          {
+            "type": "AI",
+            "label": "AI-utilized"
+          }
+        ]
+      },
+      "row": {
+        "number": "10",
+        "name": "Ecological Network Website Revamp",
+        "sector": "Government · Conservation website"
+      },
+      "filters": {
+        "type": "Website",
+        "sector": "Government"
+      },
+      "next": "light-rail-line-microsite",
+      "hiddenSections": []
+    },
+    {
+      "case": "02",
+      "slug": "light-rail-line-microsite",
+      "title": "Light Rail Line Microsite",
+      "overline": "Case study 02 · Transportation",
+      "summary": "A public microsite introducing a new light rail line. I built the concept direction from the line’s narrative and design principles, then designed it across desktop, tablet and mobile through to public launch.",
+      "tags": [
+        {
+          "type": "Launched",
+          "label": "Launched"
+        },
+        {
+          "type": "Responsive",
+          "label": "Responsive"
+        },
+        {
+          "type": "Industry",
+          "label": "Transportation"
+        },
+        {
+          "type": "Tool",
+          "label": "Figma"
+        }
+      ],
+      "meta": [
+        {
+          "label": "Role",
+          "value": "UI/UX Designer"
+        },
+        {
+          "label": "Sector",
+          "value": "Transportation · Infrastructure"
+        },
+        {
+          "label": "Platform",
+          "value": "Responsive microsite"
+        },
+        {
+          "label": "Status",
+          "value": "Launched"
+        }
+      ],
+      "live": [
+        {
+          "label": "Visit live site",
+          "url": "https://laluanmutiara.mymrt.com.my/"
+        }
+      ],
+      "hero": "screenshots/s02_hero.png",
+      "showcase": [
+        {
+          "frame": "browser",
+          "image": "screenshots/s02_inner.png"
+        },
+        {
+          "frame": "phone",
+          "image": "screenshots/s02_mob.png"
+        }
+      ],
+      "cardImage": "mockups/mockup-02.png",
+      "template": "full",
+      "featured": {
+        "number": "02",
+        "title": "Light Rail Line Microsite",
+        "meta": "Transportation · Public microsite",
+        "description": "A concept direction built on the line’s narrative and design principles, carried from proposal to public launch.",
+        "tags": [
+          {
+            "type": "Launched",
+            "label": "Launched"
+          },
+          {
+            "type": "Industry",
+            "label": "Transportation"
+          }
+        ]
+      },
+      "row": {
+        "number": "08",
+        "name": "Light Rail Line Microsite",
+        "sector": "Transportation · Microsite"
+      },
+      "filters": {
+        "type": "Microsite",
+        "sector": "Transportation"
+      },
+      "next": "religious-council-e-services-portal",
+      "hiddenSections": []
+    },
+    {
+      "case": "03",
+      "slug": "religious-council-e-services-portal",
+      "title": "State Religious Council e-Services Portal",
+      "overline": "Case study 03 · Government e-Services",
+      "summary": "A digital portal that brings a state religious council’s public services into one place: pay, check and apply. I spent four days on-site with the client, presented 10 wireframe flows, led client meetings solo and guided a junior team through to launch.",
+      "tags": [
+        {
+          "type": "Lead",
+          "label": "Lead the project"
+        },
+        {
+          "type": "Launched",
+          "label": "Launched"
+        },
+        {
+          "type": "AI",
+          "label": "AI-utilized"
+        },
+        {
+          "type": "Problem Solving",
+          "label": "Complex problem solving"
+        },
+        {
+          "type": "Responsive",
+          "label": "Responsive"
+        },
+        {
+          "type": "Design System",
+          "label": "JMIX/Vaadin"
+        },
+        {
+          "type": "Government",
+          "label": "Government"
+        },
+        {
+          "type": "Tool",
+          "label": "ChatGPT"
+        },
+        {
+          "type": "Tool",
+          "label": "Magnific"
+        },
+        {
+          "type": "Tool",
+          "label": "Figma"
+        }
+      ],
+      "meta": [
+        {
+          "label": "Role",
+          "value": "UI/UX Designer · Design lead"
+        },
+        {
+          "label": "Team",
+          "value": "Led a junior design team"
+        },
+        {
+          "label": "Sector",
+          "value": "Government · e-Services"
+        },
+        {
+          "label": "Status",
+          "value": "Launched"
+        }
+      ],
+      "live": [
+        {
+          "label": "Visit live portal",
+          "url": "https://digital.maips.gov.my/"
+        }
+      ],
+      "hero": "screenshots/s03_hero.png",
+      "showcase": [
+        {
+          "frame": "browser",
+          "image": "screenshots/s03_inner.png"
+        },
+        {
+          "frame": "phone",
+          "image": "screenshots/s03_mob.png"
+        }
+      ],
+      "cardImage": "mockups/mockup-03.png",
+      "template": "full",
+      "featured": {
+        "number": "03",
+        "title": "State Religious Council⏎e-Services Portal",
+        "meta": "Government · e-Services portal",
+        "description": "Four days on-site with the client, 10 wireframe flows presented, and a junior team led through to launch.",
+        "tags": [
+          {
+            "type": "Lead",
+            "label": "Lead the project"
+          },
+          {
+            "type": "Launched",
+            "label": "Launched"
+          },
+          {
+            "type": "Responsive",
+            "label": "Responsive"
+          }
+        ]
+      },
+      "row": {
+        "number": "04",
+        "name": "State Religious Council e-Services Portal",
+        "sector": "Government · Web portal"
+      },
+      "filters": {
+        "type": "System & portal",
+        "sector": "Government"
+      },
+      "next": "expressway-operator-website-refresh",
+      "hiddenSections": []
+    },
+    {
+      "case": "04",
+      "slug": "expressway-operator-website-refresh",
+      "title": "Expressway Operator Website Refresh",
+      "overline": "Case study 04 · Infrastructure",
+      "summary": "A refresh of two expressway websites for a national highway operator. I was involved from kickoff to delivery: managing stakeholder input, grounding design decisions in usability heuristics, and designing responsive layouts.",
+      "tags": [
+        {
+          "type": "Responsive",
+          "label": "Responsive"
+        },
+        {
+          "type": "Launched",
+          "label": "Launched"
+        },
+        {
+          "type": "Industry",
+          "label": "Infrastructure"
+        }
+      ],
+      "meta": [
+        {
+          "label": "Role",
+          "value": "UI/UX Designer"
+        },
+        {
+          "label": "Sector",
+          "value": "Infrastructure · Expressways"
+        },
+        {
+          "label": "Platform",
+          "value": "Two responsive websites"
+        },
+        {
+          "label": "Status",
+          "value": "Launched"
+        }
+      ],
+      "live": [
+        {
+          "label": "Visit PLUS site",
+          "url": "https://www.plus.com.my/"
+        },
+        {
+          "label": "Visit LPT2 site",
+          "url": "https://www.lpt2.com.my/"
+        }
+      ],
+      "hero": "screenshots/s04_hero.png",
+      "showcase": [
+        {
+          "frame": "browser",
+          "image": "screenshots/s04_inner.png"
+        },
+        {
+          "frame": "phone",
+          "image": "screenshots/s04_mob.png"
+        }
+      ],
+      "cardImage": "mockups/mockup-04.png",
+      "template": "full",
+      "row": {
+        "number": "01",
+        "name": "Expressway Operator Website Refresh",
+        "sector": "Infrastructure · Corporate website"
+      },
+      "filters": {
+        "type": "Website",
+        "sector": "Infrastructure"
+      },
+      "next": "religious-council-website-revamp",
+      "hiddenSections": []
+    },
+    {
+      "case": "05",
+      "slug": "religious-council-website-revamp",
+      "title": "State Religious Council Website Revamp",
+      "overline": "Case study 05 · Government Official website",
+      "summary": "A revamp of a state religious council’s official website. I gathered requirements on-site with the client, created motion graphics, facilitated user acceptance testing and wrote design documentation. The site was delivered for desktop, tablet and mobile.",
+      "tags": [
+        {
+          "type": "Launched",
+          "label": "Launched"
+        },
+        {
+          "type": "Government",
+          "label": "Government"
+        }
+      ],
+      "meta": [
+        {
+          "label": "Role",
+          "value": "UI/UX Designer"
+        },
+        {
+          "label": "Sector",
+          "value": "Government · Religious council"
+        },
+        {
+          "label": "Platform",
+          "value": "Website + CMS"
+        },
+        {
+          "label": "Status",
+          "value": "Launched"
+        }
+      ],
+      "live": [
+        {
+          "label": "Visit live site",
+          "url": "https://www.maips.gov.my/"
+        }
+      ],
+      "hero": "screenshots/s05_hero.png",
+      "showcase": [
+        {
+          "frame": "browser",
+          "image": "screenshots/s05_inner.png"
+        },
+        {
+          "frame": "phone",
+          "image": "screenshots/s05_mob.png"
+        }
+      ],
+      "cardImage": "mockups/mockup-05.png",
+      "template": "full",
+      "row": {
+        "number": "02",
+        "name": "State Religious Council Website Revamp",
+        "sector": "Government · Website"
+      },
+      "filters": {
+        "type": "Website",
+        "sector": "Government"
+      },
+      "next": "rail-public-inspection-microsite",
+      "hiddenSections": []
+    },
+    {
+      "case": "06",
+      "slug": "rail-public-inspection-microsite",
+      "title": "Rail Line Public Inspection Microsite",
+      "overline": "Case study 06 · Transportation",
+      "summary": "A microsite for the public inspection of a new urban rail line. I introduced a new, futuristic design direction, led the responsive design and delivered on a tight deadline. The approach became the team’s responsive design SOP.",
+      "tags": [
+        {
+          "type": "Responsive",
+          "label": "Responsive"
+        },
+        {
+          "type": "Launched",
+          "label": "Launched"
+        },
+        {
+          "type": "Industry",
+          "label": "Transportation"
+        }
+      ],
+      "meta": [
+        {
+          "label": "Role",
+          "value": "UI/UX Designer · Responsive lead"
+        },
+        {
+          "label": "Sector",
+          "value": "Transportation · Rail"
+        },
+        {
+          "label": "Platform",
+          "value": "Responsive microsite"
+        },
+        {
+          "label": "Status",
+          "value": "Launched · campaign ended"
+        }
+      ],
+      "live": [],
+      "hero": "screenshots/s06_hero.png",
+      "showcase": [
+        {
+          "frame": "browser",
+          "image": "screenshots/s06_inner.png"
+        },
+        {
+          "frame": "phone",
+          "image": "screenshots/s06_mob.png"
+        }
+      ],
+      "cardImage": "mockups/mockup-06.png",
+      "hiddenSections": [
+        "Decisions"
+      ],
+      "template": "full",
+      "row": {
+        "number": "03",
+        "name": "Rail Line Public Inspection Microsite",
+        "sector": "Transportation · Microsite"
+      },
+      "filters": {
+        "type": "Microsite",
+        "sector": "Transportation"
+      },
+      "next": "national-statistics-survey-system"
+    },
+    {
+      "case": "07",
+      "slug": "national-statistics-survey-system",
+      "title": "National Statistics Survey System",
+      "overline": "Case study 07 · Data system",
+      "summary": "A UI proposal for a national survey system. I gathered requirements, set up the design system and designed the UI proposal on top of it.",
+      "tags": [
+        {
+          "type": "Design System",
+          "label": "Design system"
+        },
+        {
+          "type": "Government",
+          "label": "Government"
+        }
+      ],
+      "meta": [
+        {
+          "label": "Role",
+          "value": "UI/UX Designer"
+        },
+        {
+          "label": "Sector",
+          "value": "Government · Statistics"
+        },
+        {
+          "label": "Platform",
+          "value": "Web system"
+        },
+        {
+          "label": "Stage",
+          "value": "Launched"
+        }
+      ],
+      "live": [],
+      "hero": "screenshots/s07_hero.png",
+      "showcase": [
+        {
+          "frame": "browser",
+          "image": "screenshots/s07_data.png"
+        },
+        {
+          "frame": "browser",
+          "image": "screenshots/s07_comp.png"
+        }
+      ],
+      "cardImage": "screenshots/s07_hero.png",
+      "hiddenSections": [
+        "Decisions"
+      ],
+      "template": "full",
+      "row": {
+        "number": "05",
+        "name": "National Statistics Survey System",
+        "sector": "Government · Data system"
+      },
+      "filters": {
+        "type": "System & portal",
+        "sector": "Government"
+      },
+      "next": "vendor-management-system"
+    },
+    {
+      "case": "08",
+      "slug": "vendor-management-system",
+      "title": "Vendor Management System",
+      "overline": "Case study 08 · Web system",
+      "summary": "A vendor management system where I was the solo design lead. I designed with the Vaadin design system, proposed mobile responsive layouts and guided a junior designer.",
+      "tags": [
+        {
+          "type": "Lead",
+          "label": "Lead the project"
+        },
+        {
+          "type": "Responsive",
+          "label": "Responsive"
+        },
+        {
+          "type": "Industry",
+          "label": "Enterprise"
+        }
+      ],
+      "meta": [
+        {
+          "label": "Role",
+          "value": "Solo design lead"
+        },
+        {
+          "label": "Team",
+          "value": "Guided a junior designer"
+        },
+        {
+          "label": "Sector",
+          "value": "Corporate · Government"
+        },
+        {
+          "label": "Platform",
+          "value": "Web system · Vaadin"
+        }
+      ],
+      "live": [],
+      "hero": "screenshots/s08_hero.png",
+      "showcase": [
+        {
+          "frame": "browser",
+          "image": "screenshots/s08_inner.png"
+        },
+        {
+          "frame": "phone",
+          "image": "screenshots/s08_mob.png"
+        }
+      ],
+      "cardImage": "mockups/mockup-08.png",
+      "template": "full",
+      "row": {
+        "number": "06",
+        "name": "Vendor Management System",
+        "sector": "Enterprise · Web system"
+      },
+      "filters": {
+        "type": "System & portal",
+        "sector": "Enterprise"
+      },
+      "next": "shariah-commodity-trading-platform",
+      "hiddenSections": []
+    },
+    {
+      "case": "09",
+      "slug": "shariah-commodity-trading-platform",
+      "title": "Shariah Commodity Trading Platform",
+      "overline": "Case study 09 · Fintech · Trading platform",
+      "summary": "A Shariah-compliant commodity trading platform for a financial market operator. I simplified complex flows, applied the design system across screens and refined the design through client feedback sessions.",
+      "tags": [
+        {
+          "type": "Design System",
+          "label": "Design system"
+        },
+        {
+          "type": "Industry",
+          "label": "Fintech"
+        }
+      ],
+      "meta": [
+        {
+          "label": "Role",
+          "value": "UI/UX Designer"
+        },
+        {
+          "label": "Sector",
+          "value": "Fintech · Islamic finance"
+        },
+        {
+          "label": "Platform",
+          "value": "Web platform"
+        },
+        {
+          "label": "Focus",
+          "value": "Flow simplification"
+        }
+      ],
+      "live": [],
+      "hero": "screenshots/s09_hero.png",
+      "showcase": [
+        {
+          "frame": "browser",
+          "image": "screenshots/s09_inner1.png"
+        },
+        {
+          "frame": "browser",
+          "image": "screenshots/s09_inner2.png"
+        }
+      ],
+      "cardImage": "mockups/mockup-09.png",
+      "template": "full",
+      "row": {
+        "number": "07",
+        "name": "Shariah Commodity Trading Platform",
+        "sector": "Fintech · Trading platform"
+      },
+      "filters": {
+        "type": "System & portal",
+        "sector": "Fintech"
+      },
+      "next": "plantation-operations-dashboard",
+      "hiddenSections": []
+    },
+    {
+      "case": "10",
+      "slug": "plantation-operations-dashboard",
+      "title": "Plantation Operations Dashboard",
+      "overline": "Case study 10 · Plantation Data dashboard",
+      "summary": "A data dashboard for plantation operations. I designed the data visualizations and built the design file on Figma variables and tokens.",
+      "tags": [
+        {
+          "type": "Design System",
+          "label": "Design system"
+        },
+        {
+          "type": "Industry",
+          "label": "Plantation"
+        }
+      ],
+      "meta": [
+        {
+          "label": "Role",
+          "value": "UI/UX Designer"
+        },
+        {
+          "label": "Sector",
+          "value": "Plantation"
+        },
+        {
+          "label": "Platform",
+          "value": "Web dashboard"
+        },
+        {
+          "label": "Focus",
+          "value": "Data visualization"
+        }
+      ],
+      "live": [],
+      "hero": "screenshots/s10_hero.png",
+      "showcase": [],
+      "cardImage": "mockups/mockup-10.png",
+      "template": "snapshot",
+      "row": {
+        "number": "09",
+        "name": "Plantation Operations Dashboard",
+        "sector": "Plantation · Data dashboard"
+      },
+      "filters": {
+        "type": "Dashboard",
+        "sector": "Plantation"
+      },
+      "next": "emergency-services-bi-dashboard",
+      "hiddenSections": []
+    },
+    {
+      "case": "11",
+      "slug": "emergency-services-bi-dashboard",
+      "title": "Emergency Services BI Dashboard",
+      "overline": "Case study 11 · Emergency services",
+      "summary": "A business intelligence dashboard for emergency services. I led the responsive view of the dashboard, managing a junior designer and two interns.",
+      "tags": [
+        {
+          "type": "Lead",
+          "label": "Led responsive view"
+        },
+        {
+          "type": "Industry",
+          "label": "Emergency services"
+        }
+      ],
+      "meta": [
+        {
+          "label": "Role",
+          "value": "Responsive view lead"
+        },
+        {
+          "label": "Team",
+          "value": "1 junior + 2 interns"
+        },
+        {
+          "label": "Sector",
+          "value": "Emergency services"
+        },
+        {
+          "label": "Platform",
+          "value": "BI dashboard"
+        }
+      ],
+      "live": [],
+      "hero": "screenshots/s11_hero.png",
+      "showcase": [],
+      "cardImage": "screenshots/s11_hero.png",
+      "template": "snapshot",
+      "row": {
+        "number": "11",
+        "name": "Emergency Services BI Dashboard",
+        "sector": "Emergency services · Dashboard"
+      },
+      "filters": {
+        "type": "Dashboard",
+        "sector": "Emergency services"
+      },
+      "next": "university-website-revamp",
+      "hiddenSections": []
+    },
+    {
+      "case": "12",
+      "slug": "university-website-revamp",
+      "title": "University Website Revamp",
+      "overline": "Case study 12 · Higher education",
+      "summary": "A website revamp for a university. I defined the UI look and feel based on the university’s corporate identity.",
+      "tags": [
+        {
+          "type": "Industry",
+          "label": "Higher education"
+        }
+      ],
+      "meta": [
+        {
+          "label": "Role",
+          "value": "UI/UX Designer"
+        },
+        {
+          "label": "Sector",
+          "value": "Higher education"
+        },
+        {
+          "label": "Platform",
+          "value": "Website"
+        },
+        {
+          "label": "Focus",
+          "value": "Look and feel"
+        }
+      ],
+      "live": [],
+      "hero": "screenshots/s12_hero.png",
+      "showcase": [],
+      "cardImage": "mockups/mockup-12.png",
+      "template": "snapshot",
+      "row": {
+        "number": "12",
+        "name": "University Website Revamp",
+        "sector": "Higher education · Website"
+      },
+      "filters": {
+        "type": "Website",
+        "sector": "Higher education"
+      },
+      "next": "investment-agency-website-update",
+      "hiddenSections": []
+    },
+    {
+      "case": "13",
+      "slug": "investment-agency-website-update",
+      "title": "Investment Agency Website Update",
+      "overline": "Case study 13 · Corporate",
+      "summary": "An update to a government investment agency’s website. I designed new pages within the existing template while keeping the brand consistent.",
+      "tags": [
+        {
+          "type": "Launched",
+          "label": "Launched"
+        },
+        {
+          "type": "Industry",
+          "label": "Corporate"
+        }
+      ],
+      "meta": [
+        {
+          "label": "Role",
+          "value": "UI/UX Designer"
+        },
+        {
+          "label": "Sector",
+          "value": "Corporate · Investment"
+        },
+        {
+          "label": "Platform",
+          "value": "Website"
+        },
+        {
+          "label": "Status",
+          "value": "Launched"
+        }
+      ],
+      "live": [
+        {
+          "label": "Visit live site",
+          "url": "https://www.mida.gov.my/why-malaysia/economic-corridors/"
+        }
+      ],
+      "hero": "screenshots/s13_hero.png",
+      "showcase": [],
+      "cardImage": "mockups/mockup-13.png",
+      "template": "snapshot",
+      "row": {
+        "number": "13",
+        "name": "Investment Agency Website Update",
+        "sector": "Corporate · Website"
+      },
+      "filters": {
+        "type": "Website",
+        "sector": "Corporate"
+      },
+      "next": "rail-infrastructure-corporate-website",
+      "hiddenSections": []
+    },
+    {
+      "case": "14",
+      "slug": "rail-infrastructure-corporate-website",
+      "title": "Rail Infrastructure Corporate Website",
+      "overline": "Case study 14 · Corporate",
+      "summary": "A corporate website revamp for a rail infrastructure company. I introduced parallax scrolling in the Figma prototype.",
+      "tags": [
+        {
+          "type": "Industry",
+          "label": "Corporate"
+        }
+      ],
+      "meta": [
+        {
+          "label": "Role",
+          "value": "UI/UX Designer"
+        },
+        {
+          "label": "Sector",
+          "value": "Corporate · Rail"
+        },
+        {
+          "label": "Platform",
+          "value": "Website"
+        },
+        {
+          "label": "Focus",
+          "value": "Motion · Parallax"
+        }
+      ],
+      "live": [],
+      "hero": "screenshots/s14_hero.png",
+      "showcase": [],
+      "cardImage": "mockups/mockup-14.png",
+      "template": "snapshot",
+      "row": {
+        "number": "14",
+        "name": "Rail Infrastructure Corporate Website",
+        "sector": "Corporate · Website"
+      },
+      "filters": {
+        "type": "Website",
+        "sector": "Corporate"
+      },
+      "next": "social-media-motion-content",
+      "hiddenSections": []
+    },
+    {
+      "case": "15",
+      "slug": "social-media-motion-content",
+      "title": "Social Media Motion Content",
+      "overline": "Motion & visual · Marketing",
+      "summary": "Motion graphics for a client’s social media posts. I learned Adobe After Effects to deliver this project and produced the animated posts.",
+      "tags": [
+        {
+          "type": "Launched",
+          "label": "Launched"
+        },
+        {
+          "type": "Industry",
+          "label": "Marketing"
+        }
+      ],
+      "meta": [
+        {
+          "label": "Role",
+          "value": "Motion designer"
+        },
+        {
+          "label": "Sector",
+          "value": "Marketing"
+        },
+        {
+          "label": "Format",
+          "value": "Social media posts"
+        },
+        {
+          "label": "Status",
+          "value": "Published"
+        }
+      ],
+      "live": [],
+      "hero": "screenshots/s15_poster.png",
+      "heroFrame": "video",
+      "showcase": [],
+      "cardImage": "screenshots/s15_poster.png",
+      "template": "snapshot",
+      "row": {
+        "number": "15",
+        "name": "Social Media Motion Content",
+        "sector": "Marketing · Motion graphics"
+      },
+      "filters": {
+        "type": "Motion & video",
+        "sector": "Marketing"
+      },
+      "next": "studio-festive-greeting-video",
+      "hiddenSections": []
+    },
+    {
+      "case": "16",
+      "slug": "studio-festive-greeting-video",
+      "title": "Studio Festive Greeting Video",
+      "overline": "Motion & visual · Design studio",
+      "summary": "A festive greeting video for the design studio, told through AI-generated video.",
+      "tags": [
+        {
+          "type": "AI",
+          "label": "AI-utilized"
+        },
+        {
+          "type": "Launched",
+          "label": "Launched"
+        }
+      ],
+      "meta": [
+        {
+          "label": "Role",
+          "value": "Designer"
+        },
+        {
+          "label": "Sector",
+          "value": "Design studio"
+        },
+        {
+          "label": "Format",
+          "value": "Greeting video"
+        },
+        {
+          "label": "Status",
+          "value": "Published"
+        }
+      ],
+      "live": [],
+      "hero": "screenshots/s16_poster.png",
+      "heroFrame": "video",
+      "showcase": [],
+      "cardImage": "screenshots/s16_poster.png",
+      "template": "snapshot",
+      "row": {
+        "number": "16",
+        "name": "Studio Festive Greeting Video",
+        "sector": "Design studio · AI video"
+      },
+      "filters": {
+        "type": "Motion & video",
+        "sector": "Design studio"
+      },
+      "next": "ecological-network-website-revamp",
+      "hiddenSections": []
+    }
+  ]
+}

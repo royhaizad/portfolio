@@ -1,0 +1,24 @@
+---
+import Icon from './Icon.astro';
+import type { TagType } from '../lib/data';
+interface Props { type: TagType; label: string }
+const { type, label } = Astro.props;
+
+const map: Record<TagType, { icon: string; cls: string }> = {
+  Lead: { icon: 'crown', cls: 'border-gold-600 text-gold-900 shadow-tag-lead bg-[linear-gradient(135deg,var(--color-gold-400),var(--color-gold-200)_45%,var(--color-gold-400))]' },
+  Launched: { icon: 'globe', cls: 'bg-green-50 border-green-200 text-green-700' },
+  AI: { icon: 'cpu', cls: 'bg-violet-50 border-violet-200 text-violet-700' },
+  'Problem Solving': { icon: 'brain', cls: 'bg-rose-50 border-rose-200 text-rose-700' },
+  Responsive: { icon: 'monitor-smartphone', cls: 'bg-teal-50 border-teal-200 text-teal-700' },
+  'Design System': { icon: 'layers', cls: 'bg-amber-50 border-amber-200 text-amber-700' },
+  Government: { icon: 'landmark', cls: 'bg-slate-50 border-slate-200 text-slate-700' },
+  Industry: { icon: 'briefcase', cls: 'bg-neutral-50 border-neutral-200 text-neutral-700' },
+  Tool: { icon: 'wrench', cls: 'bg-neutral-0 border-line text-ink' },
+};
+const { icon, cls } = map[type];
+---
+
+<span class:list={['inline-flex items-center gap-2 rounded-full border px-3 py-2 text-[12px] font-medium uppercase leading-[1.2] tracking-[0.06em]', cls]}>
+  <Icon name={icon} size={16} />
+  {label}
+</span>

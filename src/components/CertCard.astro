@@ -1,0 +1,14 @@
+---
+import Icon from './Icon.astro';
+interface Props { icon: string; date: string; title: string; issuer: string }
+const { icon, date, title, issuer } = Astro.props;
+---
+
+<article class="group flex min-h-[260px] flex-col justify-between gap-8 rounded-lg border border-line bg-surface p-6 transition-colors duration-300 hover:border-accent hover:bg-accent hover:text-white md:p-8">
+  <Icon name={icon} size={32} class="text-accent transition-colors duration-300 group-hover:text-white" />
+  <div class="flex flex-col gap-2">
+    <p class="text-[12px] font-semibold uppercase tracking-[0.08em] text-ink-2 transition-colors duration-300 group-hover:text-blue-100">{date}</p>
+    <h3 class="font-display text-[22px] font-semibold leading-[1.2] tracking-[-0.01em] md:text-[28px]">{title}</h3>
+    <p class="text-[15px] text-ink-2 transition-colors duration-300 group-hover:text-blue-100 md:text-[18px]">{issuer}</p>
+  </div>
+</article>

@@ -1,0 +1,205 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import SendToTop from '../../components/SendToTop.astro';
+import Button from '../../components/Button.astro';
+import Icon from '../../components/Icon.astro';
+import Tag from '../../components/Tag.astro';
+import Lines from '../../components/Lines.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import ProcessStep from '../../components/ProcessStep.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import DeviceFrame from '../../components/DeviceFrame.astro';
+import ListItem from '../../components/ListItem.astro';
+import Insight from '../../components/Insight.astro';
+import MetaItem from '../../components/MetaItem.astro';
+import { projects, url } from '../../lib/data';
+import { bodies, snapshots } from '../../lib/cases';
+
+export function getStaticPaths() {
+  return projects.map((p) => ({ params: { slug: p.slug }, props: { project: p } }));
+}
+
+const { project: p } = Astro.props;
+const body = bodies[p.case] ?? {};
+const snap = snapshots[p.case];
+const isFull = p.template === 'full';
+const next = projects.find((x) => x.slug === p.next)!;
+const hideDecisions = (p.hiddenSections as string[]).includes('Decisions');
+
+const heroKind = (p as any).heroFrame === 'video' ? 'video' : 'browser';
+const wrap = 'mx-auto max-w-[1440px] px-5 md:px-20';
+const section = 'flex flex-col gap-10 py-20 md:gap-16 md:py-40';
+const phoneLayout = p.showcase.some((s) => s.frame === 'phone');
+
+// "Up next" card: uses the featured copy where it exists, otherwise the project summary.
+const nextTags = (next.featured?.tags ?? next.tags.slice(0, 3)) as any[];
+---
+
+<Base title={`${p.title} · Rohaizad Johari`} description={p.summary}>
+  <Nav />
+  <main class="pt-[72px] md:pt-[88px]">
+    {/* Case header */}
+    <header class="dotted-grid">
+      <div class:list={[wrap, 'flex flex-col gap-8 py-12 md:gap-10 md:py-24']}>
+        <a href={url("/#projects")} class="group inline-flex w-fit items-center gap-2 text-[16px] font-semibold md:text-[18px]">
+          <Icon name="arrow-left" size={20} class="transition-transform duration-250 group-hover:-translate-x-1" />
+          All work
+        </a>
+        <div class="flex flex-col gap-6">
+          <p class="flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.08em] text-accent md:text-[13px]">
+            <span class="size-2 rounded-full bg-accent" aria-hidden="true"></span>
+            {p.overline}
+          </p>
+          <h1 class="max-w-[1100px] font-display text-[44px] font-extrabold leading-[0.96] tracking-[-0.03em] md:text-[80px]">{p.title}</h1>
+          <p class="max-w-[820px] text-[18px] leading-[1.5] md:text-[22px]">{p.summary}</p>
+        </div>
+        <ul class="flex flex-wrap gap-2">
+          {p.tags.map((t) => <li><Tag type={t.type as any} label={t.label} /></li>)}
+        </ul>
+        <dl class="grid grid-cols-2 gap-x-4 gap-y-6 md:grid-cols-4 md:gap-6">
+          {p.meta.map((m) => <MetaItem label={m.label} value={m.value} />)}
+        </dl>
+        {p.live.length > 0 && (
+          <div class="flex flex-col gap-4 md:flex-row">
+            {p.live.map((l) => (
+              <Button label={l.label} icon="arrow-up-right" variant="secondary" href={l.url} external />
+            ))}
+          </div>
+        )}
+      </div>
+    </header>
+
+    {/* Hero media */}
+    <section aria-label="Hero screen">
+      <div class:list={[wrap, 'pb-20 md:pb-40']}>
+        <DeviceFrame
+          kind={heroKind}
+          image={p.hero}
+          alt={heroKind === 'video' ? `${p.title}: video poster frame` : `${p.title}: hero screen of the delivered design`}
+          priority
+        />
+      </div>
+    </section>
+
+    {isFull && (
+      <>
+        {body.challenge && (
+          <section class="dotted-grid">
+            <div class:list={[wrap, 'grid gap-8 py-20 md:grid-cols-2 md:gap-16 md:py-40']}>
+              <div class="flex flex-col gap-4 md:gap-6">
+                <p class="flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.08em] text-accent md:text-[13px]">
+                  <span class="size-2 rounded-full bg-accent" aria-hidden="true"></span>
+                  The challenge
+                </p>
+                <h2 class="font-display text-[32px] font-bold leading-[1.02] tracking-[-0.025em] md:text-[56px]">{body.challenge.heading}</h2>
+              </div>
+              <div class="flex flex-col gap-5 text-[16px] leading-[1.6] text-ink-2 md:text-[20px]">
+                {body.challenge.paragraphs.map((t) => <p>{t}</p>)}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {body.process && (
+          <section>
+            <div class:list={[wrap, section]}>
+              <SectionHeader overline="Process" heading={body.process.heading ?? 'Process'} description={body.process.description} />
+              <ol class:list={['grid gap-4 md:gap-6', body.process.steps.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2 lg:grid-cols-4']}>
+                {body.process.steps.map((s, i) => (
+                  <li><ProcessStep number={String(i + 1).padStart(2, '0')} title={s.title} body={s.body} /></li>
+                ))}
+              </ol>
+            </div>
+          </section>
+        )}
+
+        {body.decisions && !hideDecisions && (
+          <section class="dotted-grid">
+            <div class:list={[wrap, section]}>
+              <SectionHeader overline="Key decisions" heading={body.decisions.heading ?? 'Key decisions'} />
+              <div class="grid gap-8 md:grid-cols-2 md:gap-16">
+                {body.decisions.items.map((t) => <Insight>{t}</Insight>)}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {body.screens && p.showcase.length > 0 && (
+          <section>
+            <div class:list={[wrap, section]}>
+              <SectionHeader overline="Screens" heading={body.screens.heading ?? 'Screens'} description={body.screens.description} />
+              <div class:list={['grid items-start gap-6 md:gap-8', phoneLayout ? 'md:grid-cols-[2fr_1fr]' : 'md:grid-cols-2']}>
+                {p.showcase.map((s, i) => (
+                  <DeviceFrame
+                    kind={s.frame as any}
+                    image={s.image}
+                    alt={`${p.title}: ${s.frame === 'phone' ? 'mobile' : 'desktop'} screen ${i + 1} of the delivered design`}
+                  />
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {body.outcome && (
+          <section class="dotted-grid">
+            <div class:list={[wrap, section]}>
+              <SectionHeader overline="Outcome" heading={body.outcome.heading ?? 'Outcome'} />
+              <ul class="border-b border-line">
+                {body.outcome.items.map((t) => <ListItem>{t}</ListItem>)}
+              </ul>
+            </div>
+          </section>
+        )}
+      </>
+    )}
+
+    {!isFull && snap && (
+      <section class="dotted-grid">
+        <div class:list={[wrap, section]}>
+          <SectionHeader overline="What I did" heading={snap.heading} />
+          <ul class="border-b border-line">
+            {snap.items.map((t) => <ListItem>{t}</ListItem>)}
+          </ul>
+          {snap.tools.length > 0 && (
+            <div class="flex flex-col gap-4">
+              <p class="text-[12px] font-semibold uppercase tracking-[0.08em] text-ink-2 md:text-[13px]">Tools</p>
+              <ul class="flex flex-wrap gap-2">
+                {snap.tools.map((t) => <li><Tag type="Tool" label={t} /></li>)}
+              </ul>
+            </div>
+          )}
+        </div>
+      </section>
+    )}
+
+    {/* Up next */}
+    <section>
+      <div class:list={[wrap, section]}>
+        <div class="flex flex-col gap-4 md:gap-6">
+          <p class="flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.08em] text-accent md:text-[13px]">
+            <span class="size-2 rounded-full bg-accent" aria-hidden="true"></span>
+            Up next
+          </p>
+          <h2 class="font-display text-[44px] font-extrabold leading-[0.96] tracking-[-0.03em] md:text-[80px]">{next.title}</h2>
+        </div>
+        <div class="max-w-[720px]">
+          <ProjectCard
+            size="standard"
+            slug={next.slug}
+            cardImage={next.cardImage}
+            number={next.case}
+            title={next.title}
+            meta={next.row.sector}
+            description={next.featured?.description ?? next.summary}
+            tags={nextTags}
+          />
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+  <SendToTop />
+</Base>

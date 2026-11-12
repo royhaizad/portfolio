@@ -1,0 +1,33 @@
+---
+import Icon from './Icon.astro';
+interface Props {
+  label: string;
+  href?: string;
+  icon?: string;
+  variant?: 'primary' | 'secondary' | 'ghost';
+  external?: boolean;
+  inverse?: boolean; // ghost on dark surface
+  class?: string;
+}
+const { label, href, icon, variant = 'primary', external = false, inverse = false, class: cls = '' } = Astro.props;
+
+const base =
+  'group inline-flex items-center justify-center gap-2 rounded-full px-6 py-4 text-[16px] md:text-[18px] font-semibold leading-[1.6] tracking-[-0.0025em] transition-[background,color,gap,border-color] duration-250 ease-out hover:gap-3';
+const styles = {
+  primary: 'bg-accent text-white hover:bg-accent-hover',
+  secondary: 'bg-ink text-on-inverse hover:bg-neutral-700',
+  ghost: inverse
+    ? 'border border-neutral-700 text-on-inverse hover:bg-neutral-0 hover:text-ink'
+    : 'border border-line text-ink hover:bg-ink hover:text-on-inverse hover:border-ink',
+}[variant];
+const rotates = icon?.startsWith('arrow-');
+const attrs = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag class:list={[base, styles, cls]} href={href} {...attrs}>
+  <span>{label}</span>
+  {icon && (
+    <Icon name={icon} size={20} class:list={['transition-transform duration-250', rotates && 'group-hover:rotate-45']} />
+  )}
+</Tag>

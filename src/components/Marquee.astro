@@ -1,0 +1,33 @@
+---
+const items = [
+  'Design Systems',
+  'Responsive UX',
+  'Stakeholder Workshops',
+  'Government & Enterprise',
+  'Mentorship',
+  'AI-augmented Workflow',
+];
+---
+
+<div class="marquee overflow-hidden border-y border-line bg-surface py-6 md:py-8" aria-label="Skills">
+  <div class="marquee-inner flex w-max">
+    {[0, 1].map((n) => (
+      <ul class="marquee-track flex shrink-0 items-center" aria-hidden={n === 1 ? 'true' : undefined}>
+        {items.map((item) => (
+          <li class="flex items-center whitespace-nowrap font-display font-bold tracking-[-0.025em] text-[28px] md:text-[56px]">
+            <span class="px-6 md:px-10">{item}</span>
+            <span class="text-accent" aria-hidden="true">✺</span>
+          </li>
+        ))}
+      </ul>
+    ))}
+  </div>
+</div>
+
+<style>
+  .marquee-inner { animation: marquee 18s linear infinite; }
+  @keyframes marquee { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-inner { animation: none; }
+  }
+</style>

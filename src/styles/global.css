@@ -1,0 +1,130 @@
+@import "tailwindcss";
+@import "@fontsource-variable/schibsted-grotesk";
+@import "@fontsource-variable/inter";
+
+/* Design tokens from docs/tokens.json (Light mode only). */
+@theme {
+  --font-display: "Schibsted Grotesk Variable", system-ui, sans-serif;
+  --font-body: "Inter Variable", system-ui, sans-serif;
+
+  /* Primitives */
+  --color-blue-50: #eef2ff;
+  --color-blue-100: #dce4ff;
+  --color-blue-200: #b9c9ff;
+  --color-blue-300: #8da6ff;
+  --color-blue-400: #5e7fff;
+  --color-blue-500: #2f5bff;
+  --color-blue-600: #1f45e0;
+  --color-blue-700: #1734b0;
+  --color-blue-800: #122682;
+  --color-blue-900: #0d1a57;
+  --color-blue-950: #080f33;
+
+  --color-neutral-0: #ffffff;
+  --color-neutral-25: #faf9f6;
+  --color-neutral-50: #f3f2ee;
+  --color-neutral-100: #e8e6e0;
+  --color-neutral-200: #d5d2ca;
+  --color-neutral-300: #b3b0a8;
+  --color-neutral-400: #8b8981;
+  --color-neutral-500: #6a6862;
+  --color-neutral-600: #4d4c48;
+  --color-neutral-700: #34343a;
+  --color-neutral-800: #1f1f24;
+  --color-neutral-900: #141417;
+  --color-neutral-950: #0b0b0d;
+
+  --color-green-50: #eaf7ef;
+  --color-green-200: #b7e4c8;
+  --color-green-400: #3ccb7f;
+  --color-green-500: #14a35a;
+  --color-green-700: #0f7a45;
+  --color-violet-50: #f3f0ff;
+  --color-violet-200: #d6ccff;
+  --color-violet-700: #5b3fd1;
+  --color-teal-50: #e8f6f8;
+  --color-teal-200: #b0dfe7;
+  --color-teal-700: #0b7285;
+  --color-amber-50: #fdf5e6;
+  --color-amber-200: #f3d9a4;
+  --color-amber-700: #9a5b00;
+  --color-slate-50: #f1f3f6;
+  --color-slate-200: #cdd3dc;
+  --color-slate-700: #3e4a5c;
+  --color-rose-50: #fff0f3;
+  --color-rose-200: #f9c6d1;
+  --color-rose-700: #b4234a;
+  --color-gold-200: #f7e6a6;
+  --color-gold-400: #e9c45a;
+  --color-gold-600: #c9972b;
+  --color-gold-900: #5a3e07;
+
+  /* Semantic (light) */
+  --color-canvas: var(--color-neutral-25);
+  --color-surface: var(--color-neutral-0);
+  --color-surface-alt: var(--color-neutral-50);
+  --color-inverse: var(--color-neutral-950);
+  --color-accent: var(--color-blue-500);
+  --color-accent-hover: var(--color-blue-600);
+  --color-accent-subtle: var(--color-blue-50);
+  --color-ink: var(--color-neutral-950);
+  --color-ink-2: var(--color-neutral-600);
+  --color-ink-3: var(--color-neutral-400);
+  --color-on-inverse: var(--color-neutral-25);
+  --color-line: var(--color-neutral-200);
+  --color-line-strong: var(--color-neutral-950);
+  --color-live: var(--color-green-500);
+
+  /* Radius */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 40px;
+  --radius-full: 999px;
+
+  /* Shadows */
+  --shadow-card-rest: 0 1px 2px #0a0a0d0a;
+  --shadow-card-hover: 0 4px 12px #0a0a0d0f, 0 24px 48px -8px #2e5cff24;
+  --shadow-float: 0 16px 40px -4px #0a0a0d1f;
+  --shadow-tag-lead: inset 0 1px 0 #ffffffb2, 0 2px 8px #c9972b59;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background: var(--color-canvas);
+  }
+  body {
+    font-family: var(--font-body);
+    color: var(--color-ink);
+    background: var(--color-canvas);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Dotted grid background (desktop sections only). */
+.dotted-grid {
+  background-image: radial-gradient(circle, var(--color-neutral-200) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+@media (max-width: 767px) {
+  .dotted-grid { background-image: none; }
+}

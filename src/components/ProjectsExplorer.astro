@@ -1,0 +1,151 @@
+---
+import Icon from './Icon.astro';
+import { rows, filterOptions, countBy, url } from '../lib/data';
+
+const typeCounts = countBy('type');
+const sectorCounts = countBy('sector');
+const dropdowns = [
+  { key: 'type', label: 'Type', options: filterOptions.type, counts: typeCounts },
+  { key: 'sector', label: 'Sector', options: filterOptions.sector, counts: sectorCounts },
+];
+---
+
+<div id="explorer" class="flex flex-col gap-8 md:gap-10">
+  <div class="flex flex-col gap-3 md:flex-row md:items-center md:gap-4">
+    <label class="relative flex-1">
+      <span class="sr-only">Search projects</span>
+      <Icon name="search" size={20} class="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-ink-2" />
+      <input
+        id="search"
+        type="search"
+        placeholder="Search projects"
+        class="w-full rounded-full border border-line bg-surface py-4 pl-14 pr-6 text-[16px] md:text-[18px] placeholder:text-ink-2"
+      />
+    </label>
+    <div class="grid grid-cols-2 gap-3 md:flex md:gap-4">
+      {dropdowns.map((d) => (
+        <div class="dd relative" data-key={d.key}>
+          <button type="button" class="dd-trigger flex w-full items-center justify-between gap-3 rounded-full border border-line bg-surface px-6 py-4 text-[16px] font-semibold md:min-w-[160px] md:text-[18px]" aria-haspopup="true" aria-expanded="false">
+            <span>{d.label}<span class="dd-badge ml-2 hidden rounded-full bg-accent px-2 text-[12px] text-white"></span></span>
+            <Icon name="chevron-down" size={20} />
+          </button>
+          <div class="dd-menu absolute right-0 z-30 mt-2 hidden w-[min(320px,calc(100vw-40px))] rounded-md border border-line bg-surface p-4 shadow-float md:left-0 md:right-auto">
+            <fieldset class="max-h-[320px] overflow-auto">
+              <legend class="sr-only">{d.label}</legend>
+              {d.options.map((o) => (
+                <label class="flex cursor-pointer items-center gap-3 rounded-sm px-2 py-2 hover:bg-surface-alt">
+                  <input type="checkbox" value={o} class="size-5 shrink-0 rounded-xs border-line accent-[var(--color-accent)]" />
+                  <span class="flex-1 text-[15px]">{o}</span>
+                  <span class="text-[13px] text-ink-2">{d.counts[o] ?? 0}</span>
+                </label>
+              ))}
+            </fieldset>
+            <div class="mt-3 flex items-center justify-between border-t border-line pt-3">
+              <button type="button" class="dd-clear text-[15px] font-semibold text-ink-2 hover:text-accent">Clear all</button>
+              <button type="button" class="dd-close rounded-full bg-ink px-5 py-2 text-[15px] font-semibold text-on-inverse">Show results</button>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <p id="result-count" class="sr-only" aria-live="polite"></p>
+
+  <ul id="rows" class="border-b border-line">
+    {rows.map((p) => (
+      <li data-name={p.row.name.toLowerCase()} data-sector-text={p.row.sector.toLowerCase()} data-type={p.filters.type} data-sector={p.filters.sector}>
+        <a
+          href={url(`/work/${p.slug}`)}
+          class="group grid grid-cols-[40px_1fr_auto] items-center gap-x-4 gap-y-1 border-t border-line px-2 py-5 transition-all duration-300 hover:bg-ink hover:pl-6 hover:text-on-inverse md:grid-cols-[96px_1fr_auto_auto] md:gap-x-6 md:px-4 md:py-8 md:hover:pl-8"
+        >
+          <span class="text-[14px] font-semibold text-ink-2 group-hover:text-neutral-300 md:text-[18px]">{p.row.number}</span>
+          <span class="font-display text-[20px] font-semibold leading-[1.2] tracking-[-0.01em] md:text-[28px]">{p.row.name}</span>
+          <span class="col-start-2 row-start-2 text-[14px] text-ink-2 group-hover:text-neutral-300 md:col-start-auto md:row-start-auto md:text-right md:text-[18px]">{p.row.sector}</span>
+          <Icon name="arrow-up-right" size={24} class="col-start-3 row-start-1 row-span-2 transition-transform duration-300 group-hover:rotate-45 md:col-start-auto md:row-span-1 md:row-start-auto" />
+        </a>
+      </li>
+    ))}
+  </ul>
+
+  <div id="empty" class="hidden rounded-lg border border-dashed border-line bg-surface px-6 py-16 text-center">
+    <p class="font-display text-[24px] font-semibold md:text-[28px]">No projects match.</p>
+    <button type="button" id="empty-clear" class="mt-4 font-semibold text-accent underline underline-offset-4">Clear search and filters</button>
+  </div>
+</div>
+
+<script>
+  const root = document.getElementById('explorer')!;
+  const search = document.getElementById('search') as HTMLInputElement;
+  const items = [...root.querySelectorAll<HTMLLIElement>('#rows > li')];
+  const empty = document.getElementById('empty')!;
+  const count = document.getElementById('result-count')!;
+  const dds = [...root.querySelectorAll<HTMLElement>('.dd')];
+
+  const selected = (dd: HTMLElement) =>
+    [...dd.querySelectorAll<HTMLInputElement>('input:checked')].map((i) => i.value);
+
+  function apply() {
+    const q = search.value.trim().toLowerCase();
+    const types = selected(root.querySelector('[data-key="type"]')!);
+    const sectors = selected(root.querySelector('[data-key="sector"]')!);
+    let shown = 0;
+    for (const li of items) {
+      const okQ = !q || li.dataset.name!.includes(q) || li.dataset.sectorText!.includes(q);
+      const okT = !types.length || types.includes(li.dataset.type!);
+      const okS = !sectors.length || sectors.includes(li.dataset.sector!);
+      const show = okQ && okT && okS;
+      li.hidden = !show;
+      if (show) shown++;
+    }
+    empty.classList.toggle('hidden', shown > 0);
+    count.textContent = `${shown} of ${items.length} projects shown`;
+    for (const dd of dds) {
+      const n = selected(dd).length;
+      const badge = dd.querySelector<HTMLElement>('.dd-badge')!;
+      badge.textContent = String(n);
+      badge.classList.toggle('hidden', n === 0);
+    }
+  }
+
+  function closeAll(except?: HTMLElement) {
+    for (const dd of dds) {
+      if (dd === except) continue;
+      dd.querySelector('.dd-menu')!.classList.add('hidden');
+      dd.querySelector('.dd-trigger')!.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  for (const dd of dds) {
+    const trigger = dd.querySelector<HTMLButtonElement>('.dd-trigger')!;
+    const menu = dd.querySelector<HTMLElement>('.dd-menu')!;
+    trigger.addEventListener('click', () => {
+      const open = menu.classList.toggle('hidden') === false;
+      trigger.setAttribute('aria-expanded', String(open));
+      closeAll(dd);
+    });
+    dd.querySelectorAll('input').forEach((i) => i.addEventListener('change', apply));
+    dd.querySelector('.dd-clear')!.addEventListener('click', () => {
+      dd.querySelectorAll<HTMLInputElement>('input').forEach((i) => (i.checked = false));
+      apply();
+    });
+    dd.querySelector('.dd-close')!.addEventListener('click', () => {
+      closeAll();
+      trigger.focus();
+    });
+  }
+
+  search.addEventListener('input', apply);
+  document.getElementById('empty-clear')!.addEventListener('click', () => {
+    search.value = '';
+    root.querySelectorAll<HTMLInputElement>('input[type=checkbox]').forEach((i) => (i.checked = false));
+    apply();
+  });
+  document.addEventListener('click', (e) => {
+    if (!(e.target as HTMLElement).closest('.dd')) closeAll();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeAll();
+  });
+  apply();
+</script>

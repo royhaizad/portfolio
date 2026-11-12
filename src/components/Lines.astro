@@ -1,0 +1,13 @@
+---
+// Renders text with manual line breaks on desktop; wraps naturally on mobile.
+import { lines } from '../lib/data';
+interface Props { text: string }
+const parts = lines(Astro.props.text);
+---
+
+{parts.map((part, i) => (
+  <Fragment>
+    {part}
+    {i < parts.length - 1 && (<><br class="hidden md:inline" /><span class="md:hidden"> </span></>)}
+  </Fragment>
+))}

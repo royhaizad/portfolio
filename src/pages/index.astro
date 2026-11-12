@@ -1,0 +1,173 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import SendToTop from '../components/SendToTop.astro';
+import Button from '../components/Button.astro';
+import Tag from '../components/Tag.astro';
+import Stat from '../components/Stat.astro';
+import Marquee from '../components/Marquee.astro';
+import Lines from '../components/Lines.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import ProjectsExplorer from '../components/ProjectsExplorer.astro';
+import ProcessStep from '../components/ProcessStep.astro';
+import ExperienceRow from '../components/ExperienceRow.astro';
+import CertCard from '../components/CertCard.astro';
+import TodoNote from '../components/TodoNote.astro';
+import { featured, img } from '../lib/data';
+
+// Copy is exact from docs/content/home.md. Do not edit wording without asking the owner.
+const stats = [
+  { value: '7', label: 'Years in design:⏎4 in UI/UX,⏎3 in graphic design' },
+  { value: '16', label: 'Projects across government, fintech, infrastructure, and more' },
+  { value: '9', label: 'Projects launched⏎live to the public' },
+  { value: '3', label: 'Designers mentored to industry-ready' },
+];
+const value = [
+  { number: '01', title: 'Stakeholder clarity', body: 'I facilitated client workshops, gather requirements on-site, and defend design rationale so stakeholder input lands on time.' },
+  { number: '02', title: 'Responsive, systemized UX', body: 'I convert complex interfaces into research-backed responsive experiences, built on scalable, tokenized Figma systems.' },
+  { number: '03', title: 'Growing other designers', body: 'I mentored 3 protégés into industry-ready UI/UX designers. They reached production-ready competency within 3 months.' },
+  { number: '04', title: 'AI-augmented workflow', body: "I'm able to utilize Claude to draft Hi-Fi screens tied to the design library, and ChatGPT for UX copywriting and research." },
+];
+const experience = [
+  { period: '2023 – Present', title: 'UI/UX Designer', company: 'Seetru Studio Sdn. Bhd.', logo: 'logos/logo-seetru.png', summary: 'Lead UI/UX for government and enterprise clients, from client workshops and on-site requirement gathering to design systems and UAT.' },
+  { period: '2022 – 2023', title: 'UI/UX Designer', company: 'Touchpoint International Sdn. Bhd.', logo: 'logos/logo-touchpoint.png', summary: 'Designed mobile app prototypes with UX, development and business teams: e-commerce, IoT agriculture, ticketing and smart city app.' },
+  { period: '2019 – 2022', title: 'Graphic Designer', company: 'RichWorks International Sdn. Bhd.', logo: 'logos/logo-richworks.png', summary: 'Created marketing visuals: social posts, eBooks, print, posters, wayfinders and web ads.' },
+  { period: '2014 – 2018', title: 'Bachelor of Applied Arts and Design', company: 'International Islamic University Malaysia (IIUM)', logo: 'logos/logo-iium-crest.png', summary: 'My courses included Product Design, Furniture Design and Automotive Design. I gained skills in research, presentation, graphic design, branding, sketching and rendering, materials, time management, networking and model making, plus 3D rendering with AutoCAD, 3ds Max, Rhinoceros 5.0 and SketchUp.' },
+];
+const certs = [
+  { icon: 'layout-dashboard', date: 'May 2026', title: 'C.L.E.A.R. UI Design', issuer: 'Growth.Design' },
+  { icon: 'brain', date: 'Certificate', title: 'Strategic Problem Solving for Leaders', issuer: 'Comfori' },
+  { icon: 'circle-play', date: 'Jul 2024', title: 'Figma to Lottie', issuer: 'LottieFiles' },
+  { icon: 'users', date: 'Certificate', title: 'Intro to User Experience Design', issuer: 'Coursera' },
+];
+const toolkit = ['Figma', 'FigJam', 'Miro', 'Adobe XD', 'After Effects', 'LottieFiles', 'Illustrator', 'Photoshop', 'InDesign', 'Claude AI', 'ChatGPT', 'Microsoft Teams', 'Google Workspace'];
+
+const wrap = 'mx-auto max-w-[1440px] px-5 md:px-20';
+---
+
+<Base
+  title="Rohaizad Johari · UI/UX Designer, Kuala Lumpur"
+  description="UI/UX designer with 7 years in design. Responsive, research-backed interfaces and scalable design systems for government and enterprise."
+>
+  <Nav />
+  <main class="pt-[72px] md:pt-[88px]">
+    {/* Hero */}
+    <section class="dotted-grid">
+      <div class:list={[wrap, 'flex flex-col gap-8 py-16 md:gap-12 md:py-40']}>
+        <p class="flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.08em] text-accent md:text-[13px]">
+          <span class="size-2 rounded-full bg-accent" aria-hidden="true"></span>
+          UI/UX Designer · Kuala Lumpur, Malaysia
+        </p>
+        <h1 class="font-display text-[56px] font-extrabold leading-[1.08] tracking-[-0.035em] md:text-[100px]">
+          <Lines text="Clarity for⏎complex systems." />
+        </h1>
+        <div class="flex flex-col gap-8 md:flex-row md:items-start md:gap-10">
+          <Image src={img('profile/portrait.png')} alt="Portrait of Rohaizad Johari" width={144} height={144} class="size-[72px] shrink-0 rounded-full object-cover" loading="eager" />
+          <p class="max-w-[720px] text-[18px] leading-[1.5] tracking-[-0.005em] md:text-[22px]">
+            A UI/UX designer with 7 years in design. I turn complex requirements into responsive, research-backed interfaces, and build the design systems that keep them consistent.
+          </p>
+        </div>
+        <div class="flex flex-col gap-4 md:flex-row">
+          <Button label="See my works" icon="arrow-down" href="#work" />
+          {/* TODO: resume PDF pending from owner. */}
+          <Button label="Download Resume" icon="download" variant="ghost" href="#todo-resume" />
+        </div>
+        <TodoNote>resume file for "Download Resume" is pending from the owner.</TodoNote>
+      </div>
+    </section>
+
+    {/* Stats */}
+    <section aria-label="Key numbers">
+      <div class:list={[wrap, 'grid grid-cols-2 gap-x-4 gap-y-10 py-12 md:grid-cols-4 md:gap-6 md:py-20']}>
+        {stats.map((s) => <Stat value={s.value} label={s.label} />)}
+      </div>
+    </section>
+
+    <Marquee />
+
+    {/* Selected work */}
+    <section id="work" class="scroll-mt-24 dotted-grid">
+      <div class:list={[wrap, 'flex flex-col gap-10 py-20 md:gap-16 md:py-40']}>
+        <SectionHeader
+          overline="Selected work"
+          heading="Case studies"
+          description="Three projects, three different problems: a storytelling revamp, a public launch, and an e-services portal I led on-site."
+        />
+        <div class="flex flex-col gap-6 md:gap-8">
+          {featured.map((p) => (
+            <ProjectCard
+              slug={p.slug}
+              cardImage={p.cardImage}
+              number={p.featured!.number}
+              title={p.featured!.title}
+              meta={p.featured!.meta}
+              description={p.featured!.description}
+              tags={p.featured!.tags as any}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* All projects */}
+    <section id="projects" class="scroll-mt-24">
+      <div class:list={[wrap, 'flex flex-col gap-10 py-20 md:gap-16 md:py-40']}>
+        <SectionHeader
+          overline="All projects"
+          heading="16 projects.⏎From government to fintech."
+          description="Every project I contributed to. Click any row for the case study. Client names are withheld; scope and role are real."
+        />
+        <ProjectsExplorer />
+      </div>
+    </section>
+
+    {/* Value */}
+    <section id="about" class="scroll-mt-24 dotted-grid">
+      <div class:list={[wrap, 'flex flex-col gap-10 py-20 md:gap-16 md:py-40']}>
+        <SectionHeader
+          overline="Bonus skills"
+          heading="Value I bring to your team"
+          description="Strengths proven on real client projects, not just screens."
+        />
+        <div class="grid gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-4">
+          {value.map((v) => <ProcessStep {...v} />)}
+        </div>
+      </div>
+    </section>
+
+    {/* Experience */}
+    <section id="experience" class="scroll-mt-24">
+      <div class:list={[wrap, 'flex flex-col gap-10 py-20 md:gap-16 md:py-40']}>
+        <SectionHeader
+          overline="Work experience"
+          heading="From graphic design to UI/UX"
+          description="7 years in design. I moved from industrial design, graphic designer to UI/UX designer."
+        />
+        <div class="border-b border-line">
+          {experience.map((e) => <ExperienceRow {...e} />)}
+        </div>
+      </div>
+    </section>
+
+    {/* Credentials */}
+    <section class="dotted-grid">
+      <div class:list={[wrap, 'flex flex-col gap-10 py-20 md:gap-16 md:py-40']}>
+        <SectionHeader overline="Credentials" heading="Always learning" description="Certifications and the toolkit I use every day." />
+        <div class="grid gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-4">
+          {certs.map((c) => <CertCard {...c} />)}
+        </div>
+        <div class="flex flex-col gap-4">
+          <p class="text-[12px] font-semibold uppercase tracking-[0.08em] text-ink-2 md:text-[13px]">Toolkit</p>
+          <ul class="flex flex-wrap gap-2">
+            {toolkit.map((t) => <li><Tag type="Tool" label={t} /></li>)}
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+  <SendToTop />
+</Base>
