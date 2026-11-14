@@ -10,7 +10,7 @@ export interface TagData { type: TagType; label: string }
 export const projects = data.projects;
 export const filterOptions = data.filterOptions;
 
-const images = import.meta.glob<{ default: ImageMetadata }>('../../assets/**/*.png', { eager: true });
+const images = import.meta.glob<{ default: ImageMetadata }>('../../assets/**/*.{png,webp}', { eager: true });
 
 /** Resolve a path like "mockups/mockup-01.png" to optimisable image metadata. */
 export function img(path: string): ImageMetadata {

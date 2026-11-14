@@ -15,6 +15,7 @@ import ProjectsExplorer from '../components/ProjectsExplorer.astro';
 import ProcessStep from '../components/ProcessStep.astro';
 import ExperienceRow from '../components/ExperienceRow.astro';
 import CertCard from '../components/CertCard.astro';
+import CertViewer from '../components/CertViewer.astro';
 import { featured, img, url } from '../lib/data';
 
 // Copy is exact from docs/content/home.md. Do not edit wording without asking the owner.
@@ -37,10 +38,10 @@ const experience = [
   { period: '2014 – 2018', title: 'Bachelor of Applied Arts and Design', company: 'International Islamic University Malaysia (IIUM)', logo: 'logos/logo-iium-crest.png', summary: 'My courses included Product Design, Furniture Design and Automotive Design. I gained skills in research, presentation, graphic design, branding, sketching and rendering, materials, time management, networking and model making, plus 3D rendering with AutoCAD, 3ds Max, Rhinoceros 5.0 and SketchUp.' },
 ];
 const certs = [
-  { icon: 'layout-dashboard', date: 'May 2026', title: 'C.L.E.A.R. UI Design', issuer: 'Growth.Design' },
-  { icon: 'brain', date: 'Certificate', title: 'Strategic Problem Solving for Leaders', issuer: 'Comfori' },
-  { icon: 'circle-play', date: 'Jul 2024', title: 'Figma to Lottie', issuer: 'LottieFiles' },
-  { icon: 'users', date: 'Certificate', title: 'Intro to User Experience Design', issuer: 'Coursera' },
+  { image: 'certificates/cert-clear-ui.webp', alt: 'C.L.E.A.R. UI Design certificate awarded to Rohaizad Johari', date: 'May 2026', title: 'C.L.E.A.R. UI Design', issuer: 'Growth.Design' },
+  { image: 'certificates/cert-strategic-problem-solving.png', alt: 'Certificate of completion in Strategic Problem-Solving for Leaders', date: 'Certificate', title: 'Strategic Problem Solving for Leaders', issuer: 'Comfori' },
+  { image: 'certificates/cert-figma-to-lottie.webp', alt: 'Figma to Lottie course certificate of completion', date: 'Jul 2024', title: 'Figma to Lottie', issuer: 'LottieFiles' },
+  { image: 'certificates/cert-intro-ux.png', alt: 'Coursera account page showing Introduction to User Experience Design marked 100% complete', date: 'Certificate', title: 'Intro to User Experience Design', issuer: 'Coursera' },
 ];
 const toolkit = ['Figma', 'FigJam', 'Miro', 'Adobe XD', 'After Effects', 'LottieFiles', 'Illustrator', 'Photoshop', 'InDesign', 'Claude AI', 'ChatGPT', 'Microsoft Teams', 'Google Workspace'];
 
@@ -155,6 +156,7 @@ const wrap = 'mx-auto max-w-[1440px] px-5 md:px-20';
         <SectionHeader overline="Credentials" heading="Always learning" description="Certifications and the toolkit I use every day." />
         <div class="grid gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-4">
           {certs.map((c) => <CertCard {...c} />)}
+          <CertViewer />
         </div>
         <div class="flex flex-col gap-4">
           <p class="text-[12px] font-semibold uppercase tracking-[0.08em] text-ink-2 md:text-[13px]">Toolkit</p>

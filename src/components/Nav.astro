@@ -18,13 +18,13 @@ const links = [
       Rohaizad Johari
     </a>
 
-    <nav aria-label="Main" class="hidden items-center gap-10 lg:flex">
+    <nav aria-label="Main" class="hidden items-center gap-10 xl:flex">
       {links.map((l) => (
         <a href={l.href} class="text-[18px] font-semibold tracking-[-0.0025em] transition-colors hover:text-accent">{l.label}</a>
       ))}
     </nav>
 
-    <div class="hidden items-center gap-6 lg:flex">
+    <div class="hidden items-center gap-6 xl:flex">
       <p class="flex items-center gap-2 text-[15px] leading-[1.55]">
         <span class="size-2.5 rounded-full bg-live" aria-hidden="true"></span>
         Open to new roles
@@ -35,7 +35,7 @@ const links = [
     <button
       type="button"
       id="menu-toggle"
-      class="grid size-11 place-items-center rounded-full border border-line lg:hidden"
+      class="grid size-11 place-items-center rounded-full border border-line xl:hidden"
       aria-expanded="false"
       aria-controls="mobile-menu"
       aria-label="Open menu"
@@ -44,7 +44,7 @@ const links = [
     </button>
   </div>
 
-  <div id="mobile-menu" class="hidden border-t border-line bg-canvas px-5 pb-8 pt-4 lg:!hidden">
+  <div id="mobile-menu" class="hidden border-t border-line bg-canvas px-5 pb-8 pt-4 xl:!hidden">
     <nav aria-label="Mobile" class="flex flex-col">
       {links.map((l) => (
         <a href={l.href} class="border-b border-line py-4 font-display text-[28px] font-semibold tracking-[-0.01em]">{l.label}</a>
