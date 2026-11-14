@@ -108,7 +108,7 @@ const nextTags = (next.featured?.tags ?? next.tags.slice(0, 3)) as any[];
               <SectionHeader overline="Process" heading={body.process.heading ?? 'Process'} description={body.process.description} />
               <ol class:list={['grid gap-4 md:gap-6', body.process.steps.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2 lg:grid-cols-4']}>
                 {body.process.steps.map((s, i) => (
-                  <li><ProcessStep number={String(i + 1).padStart(2, '0')} title={s.title} body={s.body} /></li>
+                  <li class="flex"><ProcessStep number={String(i + 1).padStart(2, '0')} title={s.title} body={s.body} /></li>
                 ))}
               </ol>
             </div>
