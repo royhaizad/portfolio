@@ -15,8 +15,7 @@ import ProjectsExplorer from '../components/ProjectsExplorer.astro';
 import ProcessStep from '../components/ProcessStep.astro';
 import ExperienceRow from '../components/ExperienceRow.astro';
 import CertCard from '../components/CertCard.astro';
-import TodoNote from '../components/TodoNote.astro';
-import { featured, img } from '../lib/data';
+import { featured, img, url } from '../lib/data';
 
 // Copy is exact from docs/content/home.md. Do not edit wording without asking the owner.
 const stats = [
@@ -72,10 +71,8 @@ const wrap = 'mx-auto max-w-[1440px] px-5 md:px-20';
         </div>
         <div class="flex flex-col gap-4 md:flex-row">
           <Button label="See my works" icon="arrow-down" href="#work" />
-          {/* TODO: resume PDF pending from owner. */}
-          <Button label="Download Resume" icon="download" variant="ghost" href="#todo-resume" />
+          <Button label="Download Resume" icon="download" variant="ghost" href={url('/Rohaizad-Johari-Resume.pdf')} download />
         </div>
-        <TodoNote>resume file for "Download Resume" is pending from the owner.</TodoNote>
       </div>
     </section>
 

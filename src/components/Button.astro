@@ -6,10 +6,11 @@ interface Props {
   icon?: string;
   variant?: 'primary' | 'secondary' | 'ghost';
   external?: boolean;
+  download?: boolean;
   inverse?: boolean; // ghost on dark surface
   class?: string;
 }
-const { label, href, icon, variant = 'primary', external = false, inverse = false, class: cls = '' } = Astro.props;
+const { label, href, icon, variant = 'primary', external = false, download = false, inverse = false, class: cls = '' } = Astro.props;
 
 const base =
   'group inline-flex items-center justify-center gap-2 rounded-full px-6 py-4 text-[16px] md:text-[18px] font-semibold leading-[1.6] tracking-[-0.0025em] transition-[background,color,gap,border-color] duration-250 ease-out hover:gap-3';
@@ -21,7 +22,7 @@ const styles = {
     : 'border border-line text-ink hover:bg-ink hover:text-on-inverse hover:border-ink',
 }[variant];
 const rotates = icon?.startsWith('arrow-');
-const attrs = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+const attrs = { ...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {}), ...(download ? { download: '' } : {}) };
 const Tag = href ? 'a' : 'button';
 ---
 

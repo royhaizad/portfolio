@@ -2,7 +2,7 @@
 import Button from './Button.astro';
 import Icon from './Icon.astro';
 import SectionHeader from './SectionHeader.astro';
-import TodoNote from './TodoNote.astro';
+import { url } from '../lib/data';
 ---
 
 <footer id="contact" class="scroll-mt-24 bg-inverse text-on-inverse">
@@ -10,12 +10,9 @@ import TodoNote from './TodoNote.astro';
     <SectionHeader overline="Contact" heading="Let's work together." inverse />
     <div class="flex flex-col gap-4 md:flex-row md:flex-wrap">
       <Button label="izadjoe95@gmail.com" icon="mail" href="mailto:izadjoe95@gmail.com" />
-      {/* TODO: LinkedIn URL pending from owner. */}
-      <Button label="LinkedIn" icon="linkedin" variant="ghost" inverse href="#todo-linkedin" />
-      {/* TODO: resume PDF pending from owner. */}
-      <Button label="Download resume" icon="download" variant="ghost" inverse href="#todo-resume" />
+      <Button label="LinkedIn" icon="linkedin" variant="ghost" inverse href="https://www.linkedin.com/in/royhaizad/" external />
+      <Button label="Download resume" icon="download" variant="ghost" inverse href={url('/Rohaizad-Johari-Resume.pdf')} download />
     </div>
-    <TodoNote>LinkedIn URL and resume file are pending from the owner.</TodoNote>
     <div class="flex flex-col gap-3 border-t border-neutral-700 pt-8 text-[14px] text-neutral-300 md:flex-row md:items-center md:justify-between md:text-[15px]">
       <p class="flex items-center gap-2"><Icon name="map-pin" size={18} />Kuala Lumpur, Malaysia</p>
       <p>© 2026 Rohaizad Johari. Designed in Figma.</p>
