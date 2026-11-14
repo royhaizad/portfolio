@@ -20,10 +20,16 @@ const { title, description } = Astro.props;
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site).href} />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={new URL(url('/og.png'), Astro.site).href} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Rohaizad Johari, UI/UX Designer, Kuala Lumpur, Malaysia" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={new URL(url('/og.png'), Astro.site).href} />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href} />
+    <link rel="icon" type="image/png" sizes="64x64" href={url('/favicon-64.png')} />
+    <link rel="apple-touch-icon" href={url('/apple-touch-icon.png')} />
     <link rel="sitemap" href={url("/sitemap-index.xml")} />
-    {/* TODO: favicon and OG image not designed yet (suggest blue "RJ" badge). Ask owner. */}
   </head>
   <body>
     <slot />
