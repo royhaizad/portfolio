@@ -13,7 +13,7 @@ const loading = priority ? 'eager' : 'lazy';
 ---
 
 {kind === 'browser' && (
-  <figure class="overflow-hidden rounded-md border border-line bg-surface shadow-card-rest">
+  <figure data-reveal class="overflow-hidden rounded-md border border-line bg-surface shadow-card-rest">
     <div class="flex items-center gap-2 border-b border-line bg-surface-alt px-4 py-3" aria-hidden="true">
       <span class="size-3 rounded-full bg-neutral-200"></span>
       <span class="size-3 rounded-full bg-neutral-200"></span>
@@ -32,7 +32,7 @@ const loading = priority ? 'eager' : 'lazy';
 )}
 
 {kind === 'phone' && (
-  <figure class="mx-auto w-full max-w-[320px] overflow-hidden rounded-[40px] border-[8px] border-ink bg-ink shadow-card-rest">
+  <figure data-reveal class="mx-auto w-full max-w-[320px] overflow-hidden rounded-[40px] border-[8px] border-ink bg-ink shadow-card-rest">
     <Image
       src={src}
       alt={alt}
@@ -45,7 +45,7 @@ const loading = priority ? 'eager' : 'lazy';
 )}
 
 {kind === 'video' && (
-  <figure class="overflow-hidden rounded-md border border-line bg-ink shadow-card-rest">
+  <figure data-reveal class="overflow-hidden rounded-md border border-line bg-ink shadow-card-rest">
     <Image
       src={src}
       alt={alt}

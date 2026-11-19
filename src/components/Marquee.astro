@@ -9,14 +9,14 @@ const items = [
 ];
 ---
 
-<div class="marquee overflow-hidden border-y border-line bg-surface py-6 md:py-8" aria-label="Skills">
+<div class="marquee overflow-hidden py-6 text-white md:py-8" aria-label="Skills">
   <div class="marquee-inner flex w-max">
     {[0, 1].map((n) => (
       <ul class="marquee-track flex shrink-0 items-center" aria-hidden={n === 1 ? 'true' : undefined}>
         {items.map((item) => (
           <li class="flex items-center whitespace-nowrap font-display font-bold tracking-[-0.025em] text-[28px] md:text-[56px]">
             <span class="px-6 md:px-10">{item}</span>
-            <span class="text-accent" aria-hidden="true">✺</span>
+            <span class="text-blue-300" aria-hidden="true">✺</span>
           </li>
         ))}
       </ul>
@@ -25,6 +25,23 @@ const items = [
 </div>
 
 <style>
+  /* Band colour sampled from the Figma Marquee (node 13:72): blue, darkest at the
+     bottom-left and lightest at the top-right. Two horizontal gradients (bottom, and
+     a top one faded out downward) give that bilinear blend. */
+  .marquee {
+    position: relative;
+    isolation: isolate;
+    background: linear-gradient(90deg, #1e45e0, #2851f2);
+  }
+  .marquee::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(90deg, #2b55f7, #2d58fa);
+    -webkit-mask-image: linear-gradient(to bottom, #000, transparent);
+    mask-image: linear-gradient(to bottom, #000, transparent);
+  }
   .marquee-inner { animation: marquee 18s linear infinite; }
   @keyframes marquee { to { transform: translateX(-50%); } }
   @media (prefers-reduced-motion: reduce) {

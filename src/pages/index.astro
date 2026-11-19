@@ -20,9 +20,9 @@ import { featured, img, url } from '../lib/data';
 
 // Copy is exact from docs/content/home.md. Do not edit wording without asking the owner.
 const stats = [
-  { value: '7', label: 'Years in design:⏎4 in UI/UX,⏎3 in graphic design' },
   { value: '16', label: 'Projects across government, fintech, infrastructure, and more' },
   { value: '9', label: 'Projects launched⏎live to the public' },
+  { value: '7', label: 'Years in design:⏎4 in UI/UX,⏎3 in graphic design' },
   { value: '3', label: 'Designers mentored to industry-ready' },
 ];
 const value = [
@@ -56,7 +56,7 @@ const wrap = 'mx-auto max-w-[1440px] px-5 md:px-20';
   <main class="pt-[72px] md:pt-[88px]">
     {/* Hero */}
     <section class="dotted-grid">
-      <div class:list={[wrap, 'flex flex-col gap-8 py-16 md:gap-12 md:py-40']}>
+      <div data-hero class:list={[wrap, 'flex flex-col gap-8 py-16 md:gap-12 md:py-40']}>
         <p class="flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.08em] text-accent md:text-[13px]">
           <span class="size-2 rounded-full bg-accent" aria-hidden="true"></span>
           UI/UX Designer · Kuala Lumpur, Malaysia
@@ -151,7 +151,7 @@ const wrap = 'mx-auto max-w-[1440px] px-5 md:px-20';
     </section>
 
     {/* Credentials */}
-    <section class="dotted-grid">
+    <section id="credentials" class="dotted-grid">
       <div class:list={[wrap, 'flex flex-col gap-10 py-20 md:gap-16 md:py-40']}>
         <SectionHeader overline="Credentials" heading="Always learning" description="Certifications and the toolkit I use every day." />
         <div class="grid gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-4">

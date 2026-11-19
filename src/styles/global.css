@@ -120,11 +120,36 @@
   }
 }
 
-/* Dotted grid background (desktop sections only). */
+/* Dotted grid background (desktop sections only).
+   The dots live on a pseudo-element so the top and bottom edges can feather out
+   (160px) without fading the section's content. */
 .dotted-grid {
+  position: relative;
+  isolation: isolate;
+}
+.dotted-grid::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
   background-image: radial-gradient(circle, var(--color-neutral-200) 1px, transparent 1px);
   background-size: 16px 16px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 160px, #000 calc(100% - 160px), transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 160px, #000 calc(100% - 160px), transparent);
 }
 @media (max-width: 767px) {
-  .dotted-grid { background-image: none; }
+  .dotted-grid::before { display: none; }
+}
+
+/* Motion: targets are hidden only while html.motion is set (see Base.astro). */
+html.motion [data-hero] > *,
+html.motion [data-reveal-group] > *,
+html.motion [data-reveal] {
+  visibility: hidden;
+}
+
+/* Active nav link (set by motion.ts on Home). */
+a[data-nav][aria-current='true'] {
+  color: var(--color-accent);
 }

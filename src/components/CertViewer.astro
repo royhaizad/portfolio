@@ -1,28 +1,31 @@
 ---
 import Icon from './Icon.astro';
+
+const round =
+  'absolute top-4 z-20 grid size-12 place-items-center rounded-full bg-white/10 transition-colors hover:bg-white/25 md:top-8';
 ---
 
 <dialog
   id="cert-viewer"
   aria-label="Certificate viewer"
-  class="fixed inset-0 m-0 h-dvh max-h-none w-dvw max-w-none bg-transparent p-0 text-white backdrop:bg-black/90"
+  class="fixed inset-0 m-0 h-dvh max-h-none w-dvw max-w-none overflow-hidden bg-transparent p-0 text-white backdrop:bg-black/90"
 >
   <div class="relative flex h-full w-full flex-col items-center justify-center gap-4 p-4 md:p-12">
-    <button
-      type="button"
-      id="cert-close"
-      aria-label="Close"
-      autofocus
-      class="absolute right-4 top-4 grid size-12 place-items-center rounded-full bg-white/10 transition-colors hover:bg-white/25 md:right-8 md:top-8"
-    >
+    <button type="button" id="cert-close" aria-label="Close" autofocus class:list={[round, 'right-4 md:right-8']}>
       <Icon name="x" size={24} />
+    </button>
+    <button type="button" id="cert-zoom-in" aria-label="Zoom in" class:list={[round, 'right-[72px] md:right-[88px]']}>
+      <Icon name="zoom-in" size={24} />
+    </button>
+    <button type="button" id="cert-zoom-out" aria-label="Zoom out" class:list={[round, 'right-[128px] md:right-[144px]']}>
+      <Icon name="zoom-out" size={24} />
     </button>
 
     <button
       type="button"
       id="cert-prev"
       aria-label="Previous certificate"
-      class="absolute left-3 top-1/2 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-white/10 transition-colors hover:bg-white/25 md:left-8"
+      class="absolute left-3 top-1/2 z-10 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-white/10 transition-colors hover:bg-white/25 md:left-8"
     >
       <Icon name="chevron-left" size={24} />
     </button>
@@ -30,12 +33,17 @@ import Icon from './Icon.astro';
       type="button"
       id="cert-next"
       aria-label="Next certificate"
-      class="absolute right-3 top-1/2 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-white/10 transition-colors hover:bg-white/25 md:right-8"
+      class="absolute right-3 top-1/2 z-10 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-white/10 transition-colors hover:bg-white/25 md:right-8"
     >
       <Icon name="chevron-right" size={24} />
     </button>
 
-    <img id="cert-img" alt="" class="max-h-[78dvh] max-w-full rounded-sm object-contain shadow-float" />
+    <img
+      id="cert-img"
+      alt=""
+      draggable="false"
+      class="max-h-[78dvh] max-w-full touch-none select-none rounded-sm object-contain shadow-float will-change-transform"
+    />
     <p class="text-center text-[14px] md:text-[16px]">
       <span id="cert-caption" class="font-semibold"></span>
       <span class="ml-2 text-white/70" id="cert-count" aria-live="polite"></span>
@@ -52,12 +60,72 @@ import Icon from './Icon.astro';
     const caption = document.getElementById('cert-caption')!;
     const count = document.getElementById('cert-count')!;
     const html = document.documentElement;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let index = 0;
     let opener: HTMLElement | null = null;
+
+    // ---- Zoom and pan state (transform-origin is the image centre) ----
+    const MAX = 6;
+    let scale = 1;
+    let tx = 0;
+    let ty = 0;
+    const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
+
+    // Centre of the image with no zoom or pan applied (scale never moves the centre).
+    const layoutCentre = () => {
+      const r = img.getBoundingClientRect();
+      return { x: r.left + r.width / 2 - tx, y: r.top + r.height / 2 - ty };
+    };
+
+    const apply = (smooth = false) => {
+      img.style.transition = smooth && !reduce ? 'transform 180ms ease-out' : 'none';
+      img.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+      img.style.cursor = scale > 1 ? 'grab' : 'zoom-in';
+    };
+
+    // Keep the zoomed image covering the screen edges (no empty gaps while panning).
+    const limit = (c: { x: number; y: number }) => {
+      const w = img.offsetWidth * scale;
+      const h = img.offsetHeight * scale;
+      tx = w <= innerWidth ? 0 : clamp(tx, innerWidth - c.x - w / 2, w / 2 - c.x);
+      ty = h <= innerHeight ? 0 : clamp(ty, innerHeight - c.y - h / 2, h / 2 - c.y);
+    };
+
+    const reset = (smooth = false) => {
+      scale = 1;
+      tx = 0;
+      ty = 0;
+      apply(smooth);
+    };
+
+    // Zoom keeping the point (px, py) fixed on screen.
+    const zoomAt = (px: number, py: number, next: number, smooth = false) => {
+      const c = layoutCentre();
+      const ns = clamp(next, 1, MAX);
+      const k = ns / scale;
+      tx = px - c.x - (px - c.x - tx) * k;
+      ty = py - c.y - (py - c.y - ty) * k;
+      scale = ns;
+      if (scale === 1) {
+        tx = 0;
+        ty = 0;
+      } else limit(c);
+      apply(smooth);
+    };
+
+    const pan = (dx: number, dy: number) => {
+      if (scale <= 1) return;
+      const c = layoutCentre();
+      tx += dx;
+      ty += dy;
+      limit(c);
+      apply();
+    };
 
     const show = (n: number) => {
       index = (n + cards.length) % cards.length;
       const c = cards[index];
+      reset();
       img.src = c.dataset.full!;
       img.alt = c.dataset.alt!;
       caption.textContent = `${c.dataset.title}, ${c.dataset.issuer}`;
@@ -75,29 +143,124 @@ import Icon from './Icon.astro';
 
     dlg.addEventListener('close', () => {
       html.style.overflow = '';
+      reset();
       opener?.focus();
     });
+    window.addEventListener('resize', () => dlg.open && reset());
 
+    const centreX = () => innerWidth / 2;
+    const centreY = () => innerHeight / 2;
     document.getElementById('cert-close')!.addEventListener('click', () => dlg.close());
     document.getElementById('cert-prev')!.addEventListener('click', () => show(index - 1));
     document.getElementById('cert-next')!.addEventListener('click', () => show(index + 1));
+    document.getElementById('cert-zoom-in')!.addEventListener('click', () => zoomAt(centreX(), centreY(), scale * 1.6, true));
+    document.getElementById('cert-zoom-out')!.addEventListener('click', () => zoomAt(centreX(), centreY(), scale / 1.6, true));
 
     // Click on the dark area (not the image or a button) closes the viewer.
+    // A drag that ends outside the image must not count as a click.
+    let suppressClick = false;
     dlg.addEventListener('click', (e) => {
+      if (suppressClick) return;
       if (!(e.target as HTMLElement).closest('img, button, p')) dlg.close();
     });
 
-    dlg.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft') show(index - 1);
-      if (e.key === 'ArrowRight') show(index + 1);
+    // Mouse wheel and trackpad pinch (ctrl+wheel) zoom toward the pointer.
+    dlg.addEventListener(
+      'wheel',
+      (e) => {
+        e.preventDefault();
+        const speed = e.ctrlKey ? 0.01 : 0.0018;
+        zoomAt(e.clientX, e.clientY, scale * Math.exp(-e.deltaY * speed));
+      },
+      { passive: false },
+    );
+
+    // Pointer gestures: drag to pan, two fingers to pinch, swipe to change certificate
+    // (only when not zoomed), double tap or double click to toggle zoom.
+    const ptrs = new Map<number, { x: number; y: number }>();
+    let startX = 0;
+    let startY = 0;
+    let moved = 0;
+    let lastTap = 0;
+    let lastX = 0;
+    let lastY = 0;
+
+    dlg.addEventListener('pointerdown', (e) => {
+      if ((e.target as HTMLElement).closest('button') || e.button > 0) return;
+      ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      if (ptrs.size === 1) {
+        startX = e.clientX;
+        startY = e.clientY;
+        moved = 0;
+      }
+      if (scale > 1) img.style.cursor = 'grabbing';
     });
 
-    // Swipe left/right on touch screens.
-    let startX = 0;
-    dlg.addEventListener('touchstart', (e) => (startX = e.changedTouches[0].clientX), { passive: true });
-    dlg.addEventListener('touchend', (e) => {
-      const dx = e.changedTouches[0].clientX - startX;
-      if (Math.abs(dx) > 50) show(index + (dx < 0 ? 1 : -1));
+    dlg.addEventListener('pointermove', (e) => {
+      const p = ptrs.get(e.pointerId);
+      if (!p) return;
+      if (ptrs.size === 1) {
+        moved = Math.max(moved, Math.hypot(e.clientX - startX, e.clientY - startY));
+        pan(e.clientX - p.x, e.clientY - p.y);
+        p.x = e.clientX;
+        p.y = e.clientY;
+      } else if (ptrs.size === 2) {
+        const other = [...ptrs.entries()].find(([id]) => id !== e.pointerId)![1];
+        const prevD = Math.hypot(p.x - other.x, p.y - other.y);
+        const prevMx = (p.x + other.x) / 2;
+        const prevMy = (p.y + other.y) / 2;
+        p.x = e.clientX;
+        p.y = e.clientY;
+        const d = Math.hypot(p.x - other.x, p.y - other.y);
+        const mx = (p.x + other.x) / 2;
+        const my = (p.y + other.y) / 2;
+        moved = 99;
+        if (prevD > 0) zoomAt(mx, my, (scale * d) / prevD);
+        pan(mx - prevMx, my - prevMy);
+      }
+    });
+
+    const end = (e: PointerEvent) => {
+      if (!ptrs.has(e.pointerId)) return;
+      const single = ptrs.size === 1;
+      ptrs.delete(e.pointerId);
+      img.style.cursor = scale > 1 ? 'grab' : 'zoom-in';
+      if (moved > 6) {
+        suppressClick = true;
+        setTimeout(() => (suppressClick = false), 0);
+      }
+      if (!single || e.type === 'pointercancel') return;
+
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      if (scale === 1 && Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+        show(index + (dx < 0 ? 1 : -1));
+        return;
+      }
+      if (moved < 8 && (e.target as HTMLElement).closest('img')) {
+        const now = performance.now();
+        if (now - lastTap < 320 && Math.hypot(e.clientX - lastX, e.clientY - lastY) < 30) {
+          if (scale > 1) reset(true);
+          else zoomAt(e.clientX, e.clientY, 2.5, true);
+          lastTap = 0;
+        } else {
+          lastTap = now;
+          lastX = e.clientX;
+          lastY = e.clientY;
+        }
+      }
+    };
+    dlg.addEventListener('pointerup', end);
+    dlg.addEventListener('pointercancel', end);
+
+    dlg.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') scale > 1 ? pan(80, 0) : show(index - 1);
+      else if (e.key === 'ArrowRight') scale > 1 ? pan(-80, 0) : show(index + 1);
+      else if (e.key === 'ArrowUp') pan(0, 80);
+      else if (e.key === 'ArrowDown') pan(0, -80);
+      else if (e.key === '+' || e.key === '=') zoomAt(centreX(), centreY(), scale * 1.6, true);
+      else if (e.key === '-') zoomAt(centreX(), centreY(), scale / 1.6, true);
+      else if (e.key === '0') reset(true);
     });
   }
 </script>

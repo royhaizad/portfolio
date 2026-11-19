@@ -4,7 +4,7 @@ interface Props { value: string; label: string }
 const { value, label } = Astro.props;
 ---
 
-<div class="flex flex-col gap-3 border-t border-line-strong pt-6">
-  <p class="font-display font-black leading-[0.9] tracking-[-0.03em] text-[56px] md:text-[80px]">{value}</p>
+<div data-reveal class="flex flex-col gap-3 border-t border-line-strong pt-6">
+  <p data-count class="font-display font-black leading-[0.9] tracking-[-0.03em] text-[56px] md:text-[80px]">{value}</p>
   <p class="max-w-[260px] text-[15px] leading-[1.55] text-ink-2 md:text-[18px]"><Lines text={label} /></p>
 </div>

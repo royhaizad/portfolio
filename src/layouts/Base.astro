@@ -30,8 +30,23 @@ const { title, description } = Astro.props;
     <link rel="icon" type="image/png" sizes="64x64" href={url('/favicon-64.png')} />
     <link rel="apple-touch-icon" href={url('/apple-touch-icon.png')} />
     <link rel="sitemap" href={url("/sitemap-index.xml")} />
+    <script is:inline>
+      // Hide motion targets only when motion is allowed. Failsafe: if the motion
+      // script never runs, reveal everything after 3s so content is never stuck hidden.
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('motion');
+        setTimeout(function () {
+          if (!window.__motionReady) document.documentElement.classList.remove('motion');
+        }, 3000);
+      }
+    </script>
   </head>
   <body>
+    <div id="scroll-progress" aria-hidden="true" class="pointer-events-none fixed inset-x-0 top-0 z-[60] h-[3px] origin-left scale-x-0 bg-accent"></div>
     <slot />
+    <script>
+      import { initMotion } from '../scripts/motion';
+      initMotion();
+    </script>
   </body>
 </html>
