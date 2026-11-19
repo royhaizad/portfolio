@@ -4,7 +4,27 @@ import type { TagType } from '../lib/data';
 interface Props { type: TagType; label: string }
 const { type, label } = Astro.props;
 
-const map: Record<TagType, { icon: string; cls: string }> = {
+// Tool tags show the app's real logo. Tools without a logo file (FigJam, Magnific)
+// show no icon at all rather than a generic one.
+const logos = import.meta.glob('../assets/tool-logos/*.svg', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
+const toolLogo: Record<string, string> = {
+  Figma: 'figma',
+  Miro: 'miro',
+  'Adobe XD': 'adobe-xd',
+  'After Effects': 'adobe-after-effects',
+  Illustrator: 'adobe-illustrator',
+  Photoshop: 'adobe-photoshop',
+  InDesign: 'adobe-indesign',
+  LottieFiles: 'lottiefiles',
+  'Claude AI': 'claude',
+  Claude: 'claude',
+  ChatGPT: 'chatgpt',
+  Gemini: 'gemini',
+  'Microsoft Teams': 'microsoft-teams',
+  'Google Workspace': 'google-workspace',
+};
+
+const map: Record<TagType, { icon?: string; cls: string }> = {
   Lead: { icon: 'crown', cls: 'border-gold-600 text-gold-900 shadow-tag-lead bg-[linear-gradient(135deg,var(--color-gold-400),var(--color-gold-200)_45%,var(--color-gold-400))]' },
   Launched: { icon: 'globe', cls: 'bg-green-50 border-green-200 text-green-700' },
   AI: { icon: 'cpu', cls: 'bg-violet-50 border-violet-200 text-violet-700' },
@@ -13,12 +33,19 @@ const map: Record<TagType, { icon: string; cls: string }> = {
   'Design System': { icon: 'layers', cls: 'bg-amber-50 border-amber-200 text-amber-700' },
   Government: { icon: 'landmark', cls: 'bg-slate-50 border-slate-200 text-slate-700' },
   Industry: { icon: 'briefcase', cls: 'bg-neutral-50 border-neutral-200 text-neutral-700' },
-  Tool: { icon: 'wrench', cls: 'bg-neutral-0 border-line text-ink' },
+  Tool: { cls: 'bg-neutral-0 border-line text-ink' },
 };
 const { icon, cls } = map[type];
+
+let logoSvg = '';
+if (type === 'Tool' && toolLogo[label]) {
+  const raw = logos[`../assets/tool-logos/${toolLogo[label]}.svg`];
+  if (raw) logoSvg = raw.replace('<svg', '<svg width="16" height="16" class="shrink-0" aria-hidden="true" focusable="false"');
+}
 ---
 
 <span class:list={['inline-flex items-center gap-2 rounded-full border px-3 py-2 text-[12px] font-medium uppercase leading-[1.2] tracking-[0.06em]', cls]}>
-  <Icon name={icon} size={16} />
+  {icon && <Icon name={icon} size={16} />}
+  {logoSvg && <Fragment set:html={logoSvg} />}
   {label}
 </span>
