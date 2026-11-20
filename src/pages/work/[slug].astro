@@ -40,16 +40,22 @@ const nextTags = (next.featured?.tags ?? next.tags.slice(0, 3)) as any[];
 <Base title={`${p.title} · Rohaizad Johari`} description={p.summary}>
   <Nav />
   <main class="pt-[73px] md:pt-[89px]">
+    {/* Mobile/tablet: back bar sticks under the fixed nav until the footer (end of main) */}
+    <div class="sticky top-[73px] z-40 border-b border-line bg-canvas/90 backdrop-blur md:top-[89px] lg:hidden">
+      <div class:list={[wrap, 'py-4']}>
+        <a href={url("/#projects")} class="group inline-flex w-fit items-center gap-2 text-[16px] font-semibold md:text-[18px]">
+          <Icon name="arrow-left" size={20} class="transition-transform duration-250 group-hover:-translate-x-1" />
+          All work
+        </a>
+      </div>
+    </div>
     {/* Case header */}
     <header class="dotted-grid">
       <div data-hero class:list={[wrap, 'flex flex-col gap-8 py-12 md:gap-10 md:py-24']}>
-        {/* Mobile/tablet: back bar sticks under the fixed nav while scrolling this section */}
-        <div class="sticky top-[73px] z-40 -mx-5 border-y border-line bg-canvas/90 px-5 py-4 backdrop-blur md:top-[89px] md:-mx-20 md:px-20 lg:static lg:mx-0 lg:border-0 lg:bg-transparent lg:p-0 lg:backdrop-blur-none">
-          <a href={url("/#projects")} class="group inline-flex w-fit items-center gap-2 text-[16px] font-semibold md:text-[18px]">
-            <Icon name="arrow-left" size={20} class="transition-transform duration-250 group-hover:-translate-x-1" />
-            All work
-          </a>
-        </div>
+        <a href={url("/#projects")} class="group hidden w-fit items-center gap-2 text-[18px] font-semibold lg:inline-flex">
+          <Icon name="arrow-left" size={20} class="transition-transform duration-250 group-hover:-translate-x-1" />
+          All work
+        </a>
         <div class="flex flex-col gap-6">
           <p class="flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.08em] text-accent md:text-[13px]">
             <span class="size-2 rounded-full bg-accent" aria-hidden="true"></span>
