@@ -7,6 +7,9 @@ import Icon from './Icon.astro';
   id="send-to-top"
   data-tone="light"
   aria-label="Back to top"
+  aria-hidden="true"
+  tabindex="-1"
+  data-shown="false"
   class="stt group fixed bottom-6 right-5 z-40 grid size-14 place-items-center rounded-full border shadow-float md:bottom-10 md:right-10"
 >
   <Icon name="arrow-up" size={22} class="transition-transform duration-250 group-hover:-translate-y-0.5" />
@@ -18,18 +21,52 @@ import Icon from './Icon.astro';
      tone "dark"  = dark background behind   -> white button, accent blue arrow
      Hover always contrasts with the default state: black over a light background (owner
      request), accent blue over a dark one (black would disappear there). */
-  .stt { transition: background-color 250ms ease, color 250ms ease, border-color 250ms ease; }
+  .stt {
+    transition: background-color 250ms ease, color 250ms ease, border-color 250ms ease,
+      opacity 300ms cubic-bezier(0.22, 1, 0.36, 1), transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 0s linear 0s;
+  }
+  /* Hidden until the user passes the hero: fade + scale in, fade + scale out. */
+  .stt[data-shown='false'] {
+    opacity: 0;
+    transform: scale(0.8);
+    visibility: hidden;
+    pointer-events: none;
+    transition-delay: 0s, 0s, 0s, 0s, 0s, 300ms; /* visibility flips after the fade-out ends */
+  }
   .stt[data-tone='light'] { background: #2f5bff; color: #fff; border-color: #2f5bff; }
   .stt[data-tone='light']:hover,
   .stt[data-tone='light']:focus-visible { background: #0b0b0d; color: #fff; border-color: #0b0b0d; }
   .stt[data-tone='dark'] { background: #fff; color: #2f5bff; border-color: #fff; }
   .stt[data-tone='dark']:hover,
   .stt[data-tone='dark']:focus-visible { background: #2f5bff; color: #fff; border-color: #2f5bff; }
-  @media (prefers-reduced-motion: reduce) { .stt { transition: none; } }
+  /* Reduced motion: keep a short fade, drop the scale. */
+  @media (prefers-reduced-motion: reduce) {
+    .stt { transition: background-color 0s, color 0s, border-color 0s, opacity 150ms linear, visibility 0s linear 0s; }
+    .stt[data-shown='false'] { transform: none; transition-delay: 0s, 0s, 0s, 0s, 150ms; }
+  }
 </style>
 
 <script>
   const btn = document.getElementById('send-to-top') as HTMLButtonElement | null;
+
+  // Show only after the hero is passed. Home: bottom of the hero section. Elsewhere: one viewport.
+  if (btn) {
+    const hero = document.querySelector<HTMLElement>('[data-stt-hero]');
+    const check = () => {
+      const limit = hero ? hero.getBoundingClientRect().bottom + window.scrollY : window.innerHeight;
+      const show = window.scrollY > limit - 80;
+      if (btn.dataset.shown !== String(show)) {
+        btn.dataset.shown = String(show);
+        if (show) btn.removeAttribute('aria-hidden');
+        else btn.setAttribute('aria-hidden', 'true');
+        btn.tabIndex = show ? 0 : -1;
+      }
+    };
+    window.addEventListener('scroll', check, { passive: true });
+    window.addEventListener('resize', check);
+    check();
+  }
 
   // Smooth scroll to top, ~800ms ease-in-out. Instant when reduced motion is requested.
   btn?.addEventListener('click', () => {
