@@ -14,7 +14,7 @@ const { overline, heading, description, inverse = false } = Astro.props;
     <span class:list={['size-2 rounded-full', inverse ? 'bg-blue-300' : 'bg-accent']} aria-hidden="true"></span>
     {overline}
   </p>
-  <h2 class:list={['font-display font-bold leading-[1.02] tracking-[-0.025em] text-[32px] md:text-[56px]', inverse ? 'text-on-inverse' : 'text-ink']}>
+  <h2 class:list={['font-display font-bold leading-[1.02] tracking-[-0.025em] text-[32px] md:text-[56px]', inverse ? 'text-on-inverse' : 'grad-charcoal w-fit']}>
     <Lines text={heading} />
   </h2>
   {description && (

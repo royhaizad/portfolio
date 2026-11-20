@@ -27,7 +27,7 @@ const links = [
 
     <div class="hidden items-center gap-6 xl:flex">
       <p class="flex items-center gap-2 text-[15px] leading-[1.55]">
-        <span class="size-2.5 rounded-full bg-live" aria-hidden="true"></span>
+        <span class="relative flex size-2.5" aria-hidden="true"><span class="absolute inline-flex size-full rounded-full bg-live opacity-60 motion-safe:animate-[ping_2s_cubic-bezier(0,0,0.2,1)_infinite]"></span><span class="relative inline-flex size-2.5 rounded-full bg-live"></span></span>
         Open to new roles
       </p>
       <Button label="Let's Talk" icon="message-circle" variant="secondary" href={url('/#contact')} class="!py-3" />
@@ -52,7 +52,7 @@ const links = [
       ))}
     </nav>
     <p class="mt-6 flex items-center gap-2 text-[14px]">
-      <span class="size-2.5 rounded-full bg-live" aria-hidden="true"></span>
+      <span class="relative flex size-2.5" aria-hidden="true"><span class="absolute inline-flex size-full rounded-full bg-live opacity-60 motion-safe:animate-[ping_2s_cubic-bezier(0,0,0.2,1)_infinite]"></span><span class="relative inline-flex size-2.5 rounded-full bg-live"></span></span>
       Open to new roles
     </p>
     <Button label="Let's Talk" icon="message-circle" variant="secondary" href={url('/#contact')} class="mt-4 w-full" />

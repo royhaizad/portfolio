@@ -5,15 +5,33 @@ import Icon from './Icon.astro';
 <button
   type="button"
   id="send-to-top"
+  data-tone="light"
   aria-label="Back to top"
-  class="group fixed bottom-6 right-5 z-40 grid size-14 place-items-center rounded-full border border-line bg-surface text-ink shadow-float transition-colors duration-250 hover:border-ink hover:bg-ink hover:text-on-inverse md:bottom-10 md:right-10"
+  class="stt group fixed bottom-6 right-5 z-40 grid size-14 place-items-center rounded-full border shadow-float md:bottom-10 md:right-10"
 >
-  <Icon name="arrow-up-right" size={22} class="transition-transform duration-250 group-hover:rotate-45" />
+  <Icon name="arrow-up" size={22} class="transition-transform duration-250 group-hover:-translate-y-0.5" />
 </button>
 
+<style>
+  /* The button always contrasts with whatever is behind it (see the script below):
+     tone "light" = light background behind  -> accent blue button, white arrow
+     tone "dark"  = dark background behind   -> white button, accent blue arrow
+     Hover always contrasts with the default state: black over a light background (owner
+     request), accent blue over a dark one (black would disappear there). */
+  .stt { transition: background-color 250ms ease, color 250ms ease, border-color 250ms ease; }
+  .stt[data-tone='light'] { background: #2f5bff; color: #fff; border-color: #2f5bff; }
+  .stt[data-tone='light']:hover,
+  .stt[data-tone='light']:focus-visible { background: #0b0b0d; color: #fff; border-color: #0b0b0d; }
+  .stt[data-tone='dark'] { background: #fff; color: #2f5bff; border-color: #fff; }
+  .stt[data-tone='dark']:hover,
+  .stt[data-tone='dark']:focus-visible { background: #2f5bff; color: #fff; border-color: #2f5bff; }
+  @media (prefers-reduced-motion: reduce) { .stt { transition: none; } }
+</style>
+
 <script>
+  const btn = document.getElementById('send-to-top') as HTMLButtonElement | null;
+
   // Smooth scroll to top, ~800ms ease-in-out. Instant when reduced motion is requested.
-  const btn = document.getElementById('send-to-top');
   btn?.addEventListener('click', () => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const from = window.scrollY;
@@ -31,4 +49,130 @@ import Icon from './Icon.astro';
     };
     requestAnimationFrame(step);
   });
+
+  // ---- Adaptive colour: sample what is actually behind the button -------------------
+  if (btn) {
+    const ACCENT = [47, 91, 255];
+    const lin = (v: number) => {
+      const c = v / 255;
+      return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+    };
+    const lum = (r: number, g: number, b: number) => 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
+    const L_ACCENT = lum(ACCENT[0], ACCENT[1], ACCENT[2]);
+    const ratio = (a: number, b: number) => (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+
+    type Thumb = { w: number; h: number; ctx: CanvasRenderingContext2D };
+    const thumbs = new WeakMap<HTMLImageElement, Thumb | null>();
+    const thumbOf = (img: HTMLImageElement): Thumb | null => {
+      if (thumbs.has(img)) return thumbs.get(img)!;
+      if (!img.complete || !img.naturalWidth) return null; // not loaded yet, try again later
+      try {
+        const w = 48;
+        const h = Math.max(1, Math.round((w * img.naturalHeight) / img.naturalWidth));
+        const c = document.createElement('canvas');
+        c.width = w;
+        c.height = h;
+        const ctx = c.getContext('2d', { willReadFrequently: true })!;
+        ctx.drawImage(img, 0, 0, w, h);
+        ctx.getImageData(0, 0, 1, 1); // throws if the canvas is tainted
+        const t = { w, h, ctx };
+        thumbs.set(img, t);
+        return t;
+      } catch {
+        thumbs.set(img, null);
+        return null;
+      }
+    };
+
+    // Luminance of the picture pixel under (x, y), honouring object-fit and object-position.
+    const imageLum = (img: HTMLImageElement, x: number, y: number): number | null => {
+      const t = thumbOf(img);
+      if (!t) return null;
+      const r = img.getBoundingClientRect();
+      const cs = getComputedStyle(img);
+      const nw = img.naturalWidth;
+      const nh = img.naturalHeight;
+      let dw = r.width;
+      let dh = r.height;
+      if (cs.objectFit === 'cover' || cs.objectFit === 'contain') {
+        const s = cs.objectFit === 'cover' ? Math.max(r.width / nw, r.height / nh) : Math.min(r.width / nw, r.height / nh);
+        dw = nw * s;
+        dh = nh * s;
+      }
+      const pos = cs.objectPosition.split(' ').map((v) => parseFloat(v) / 100);
+      const px = Number.isNaN(pos[0]) ? 0.5 : pos[0];
+      const py = Number.isNaN(pos[1]) ? 0.5 : pos[1];
+      const ix = (x - r.left - (r.width - dw) * px) / dw;
+      const iy = (y - r.top - (r.height - dh) * py) / dh;
+      if (ix < 0 || ix >= 1 || iy < 0 || iy >= 1) return null;
+      const d = t.ctx.getImageData(Math.min(t.w - 1, Math.floor(ix * t.w)), Math.min(t.h - 1, Math.floor(iy * t.h)), 1, 1).data;
+      return d[3] < 128 ? null : lum(d[0], d[1], d[2]);
+    };
+
+    const rgbs = (s: string) =>
+      (s.match(/rgba?\([^)]+\)/g) || [])
+        .map((m) => (m.match(/[\d.]+/g) || []).map(Number))
+        .filter((c) => c.length >= 3 && (c.length < 4 || c[3] > 0.5));
+
+    const elementLum = (el: Element): number | null => {
+      const cs = getComputedStyle(el);
+      // A gradient clipped to text (the big titles, row text) is a text fill, not a background.
+      if (cs.backgroundClip === 'text' || cs.getPropertyValue('-webkit-background-clip') === 'text') return null;
+      const solid = rgbs(cs.backgroundColor)[0];
+      if (solid) return lum(solid[0], solid[1], solid[2]);
+      if (cs.backgroundImage.includes('gradient')) {
+        const cols = rgbs(cs.backgroundImage);
+        if (cols.length) return cols.reduce((a, c) => a + lum(c[0], c[1], c[2]), 0) / cols.length;
+      }
+      return null;
+    };
+
+    const lumAt = (x: number, y: number): number => {
+      for (const el of document.elementsFromPoint(x, y)) {
+        if (el === btn || btn.contains(el) || el.id === 'scroll-progress') continue;
+        const l = el instanceof HTMLImageElement ? imageLum(el, x, y) : elementLum(el);
+        if (l !== null) return l;
+      }
+      return lum(250, 249, 246); // page canvas
+    };
+
+    let tone: 'light' | 'dark' = 'light';
+    const update = () => {
+      const r = btn.getBoundingClientRect();
+      let sum = 0;
+      let n = 0;
+      for (const fx of [0.2, 0.5, 0.8]) {
+        for (const fy of [0.2, 0.5, 0.8]) {
+          sum += lumAt(r.left + r.width * fx, r.top + r.height * fy);
+          n++;
+        }
+      }
+      const bg = sum / n;
+      // Pick whichever of accent blue and white contrasts more with the background.
+      // A small margin stops the colour flickering at the crossover.
+      const accentRatio = ratio(L_ACCENT, bg);
+      const whiteRatio = ratio(1, bg);
+      const next = tone === 'light' ? (whiteRatio > accentRatio + 0.25 ? 'dark' : 'light') : accentRatio > whiteRatio + 0.25 ? 'light' : 'dark';
+      if (next !== tone) {
+        tone = next;
+        btn.dataset.tone = tone;
+      }
+    };
+
+    let queued = false;
+    const schedule = () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(() => {
+        queued = false;
+        update();
+      });
+    };
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    window.addEventListener('load', schedule);
+    // Content reveals and image loads change what is behind the button without a scroll.
+    window.setInterval(() => !document.hidden && update(), 500);
+    update();
+  }
 </script>

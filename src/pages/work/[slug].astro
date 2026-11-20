@@ -39,7 +39,7 @@ const nextTags = (next.featured?.tags ?? next.tags.slice(0, 3)) as any[];
 
 <Base title={`${p.title} · Rohaizad Johari`} description={p.summary}>
   <Nav />
-  <main class="pt-[72px] md:pt-[88px]">
+  <main class="pt-[73px] md:pt-[89px]">
     {/* Case header */}
     <header class="dotted-grid">
       <div data-hero class:list={[wrap, 'flex flex-col gap-8 py-12 md:gap-10 md:py-24']}>
@@ -52,7 +52,7 @@ const nextTags = (next.featured?.tags ?? next.tags.slice(0, 3)) as any[];
             <span class="size-2 rounded-full bg-accent" aria-hidden="true"></span>
             {p.overline}
           </p>
-          <h1 class="max-w-[1100px] font-display text-[44px] font-extrabold leading-[0.96] tracking-[-0.03em] md:text-[80px]">{p.title}</h1>
+          <h1 class="grad-charcoal w-fit max-w-[1100px] font-display text-[44px] font-extrabold leading-[0.96] tracking-[-0.03em] md:text-[80px]">{p.title}</h1>
           <p class="max-w-[820px] text-[18px] leading-[1.5] md:text-[22px]">{p.summary}</p>
         </div>
         <ul class="flex flex-wrap gap-2">
@@ -87,15 +87,14 @@ const nextTags = (next.featured?.tags ?? next.tags.slice(0, 3)) as any[];
       <>
         {body.challenge && (
           <section class="dotted-grid">
-            <div data-reveal-group class:list={[wrap, 'grid gap-8 py-20 md:grid-cols-2 md:gap-16 md:py-40']}>
-              <div class="flex flex-col gap-4 md:gap-6">
-                <p class="flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.08em] text-accent md:text-[13px]">
-                  <span class="size-2 rounded-full bg-accent" aria-hidden="true"></span>
-                  The challenge
-                </p>
-                <h2 class="font-display text-[32px] font-bold leading-[1.02] tracking-[-0.025em] md:text-[56px]">{body.challenge.heading}</h2>
-              </div>
-              <div class="flex flex-col gap-5 text-[16px] leading-[1.6] text-ink-2 md:text-[20px]">
+            {/* Overline sits in its own row, so the heading and the paragraphs start on the same line. */}
+            <div data-reveal-group class:list={[wrap, 'grid py-20 md:grid-cols-2 md:grid-rows-[auto_1fr] md:gap-x-16 md:py-40']}>
+              <p class="mb-4 flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.08em] text-accent md:col-start-1 md:row-start-1 md:mb-6 md:text-[13px]">
+                <span class="size-2 rounded-full bg-accent" aria-hidden="true"></span>
+                The challenge
+              </p>
+              <h2 class="grad-charcoal w-fit font-display text-[32px] font-bold leading-[1.02] tracking-[-0.025em] md:col-start-1 md:row-start-2 md:text-[56px]">{body.challenge.heading}</h2>
+              <div class="mt-8 flex flex-col gap-5 text-[16px] leading-[1.6] text-ink-2 md:col-start-2 md:row-start-2 md:mt-0 md:text-[20px]">
                 {body.challenge.paragraphs.map((t) => <p>{t}</p>)}
               </div>
             </div>
@@ -108,7 +107,7 @@ const nextTags = (next.featured?.tags ?? next.tags.slice(0, 3)) as any[];
               <SectionHeader overline="Process" heading={body.process.heading ?? 'Process'} description={body.process.description} />
               <ol class:list={['grid gap-4 md:gap-6', body.process.steps.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2 lg:grid-cols-4']}>
                 {body.process.steps.map((s, i) => (
-                  <li class="flex"><ProcessStep number={String(i + 1).padStart(2, '0')} title={s.title} body={s.body} /></li>
+                  <li class="row-span-2 grid grid-rows-subgrid"><ProcessStep number={String(i + 1).padStart(2, '0')} title={s.title} body={s.body} /></li>
                 ))}
               </ol>
             </div>
@@ -183,7 +182,7 @@ const nextTags = (next.featured?.tags ?? next.tags.slice(0, 3)) as any[];
             <span class="size-2 rounded-full bg-accent" aria-hidden="true"></span>
             Up next
           </p>
-          <h2 class="font-display text-[44px] font-extrabold leading-[0.96] tracking-[-0.03em] md:text-[80px]">{next.title}</h2>
+          <h2 class="grad-charcoal w-fit font-display text-[44px] font-extrabold leading-[0.96] tracking-[-0.03em] md:text-[80px]">{next.title}</h2>
         </div>
         <div class="max-w-[720px]">
           <ProjectCard
@@ -191,6 +190,7 @@ const nextTags = (next.featured?.tags ?? next.tags.slice(0, 3)) as any[];
             slug={next.slug}
             cardImage={next.cardImage}
             number={next.case}
+            showNumber={false}
             title={next.title}
             meta={next.row.sector}
             description={next.featured?.description ?? next.summary}

@@ -1,10 +1,11 @@
 ---
-interface Props { number: string; title: string; body: string }
-const { number, title, body } = Astro.props;
+// Numbers are not shown (owner request, Nov 2026). The `number` prop is still accepted so
+// callers do not change; case pages already list steps in an <ol>.
+interface Props { number?: string; title: string; body: string }
+const { title, body } = Astro.props;
 ---
 
-<article data-reveal class="flex h-full w-full flex-col gap-4 rounded-lg border border-line bg-surface p-5 shadow-card-rest md:gap-6 md:p-8">
-  <p class="font-display text-[14px] font-bold text-accent md:text-[18px]">{number}</p>
-  <h3 class="font-display text-[22px] font-semibold leading-[1.2] tracking-[-0.01em] md:text-[28px]">{title}</h3>
+<article data-reveal class="row-span-2 grid h-full w-full grid-rows-subgrid gap-4 rounded-lg border border-line bg-surface p-5 shadow-card-rest md:gap-6 md:p-8">
+  <h3 class="font-display text-[22px] font-semibold leading-[1.2] tracking-[-0.01em] text-violet-700 md:text-[28px]">{title}</h3>
   <p class="text-[15px] leading-[1.55] text-ink-2 md:text-[18px]">{body}</p>
 </article>

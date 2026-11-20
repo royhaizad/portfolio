@@ -53,16 +53,16 @@ const wrap = 'mx-auto max-w-[1440px] px-5 md:px-20';
   description="UI/UX designer with 7 years in design. Responsive, research-backed interfaces and scalable design systems for government and enterprise."
 >
   <Nav />
-  <main class="pt-[72px] md:pt-[88px]">
+  <main class="pt-[73px] md:pt-[89px]">
     {/* Hero */}
     <section class="dotted-grid">
-      <div data-hero class:list={[wrap, 'flex flex-col gap-8 py-16 md:gap-12 md:py-40']}>
+      <div data-hero class:list={[wrap, 'flex flex-col gap-8 pb-12 pt-12 md:gap-12 md:pb-20 md:pt-20']}>
         <p class="flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.08em] text-accent md:text-[13px]">
           <span class="size-2 rounded-full bg-accent" aria-hidden="true"></span>
           UI/UX Designer · Kuala Lumpur, Malaysia
         </p>
-        <h1 class="font-display text-[56px] font-extrabold leading-[1.08] tracking-[-0.035em] md:text-[100px]">
-          <Lines text="Clarity for⏎complex systems." />
+        <h1 class="grad-charcoal w-fit font-display text-[56px] font-extrabold leading-[1.08] tracking-[-0.035em] md:text-[100px]">
+          <span class="grad-purple">Clarity</span> for<br class="hidden md:inline" /><span class="md:hidden"> </span>complex systems.
         </h1>
         <div class="flex flex-col gap-8 md:flex-row md:items-start md:gap-10">
           <Image src={img('profile/portrait.png')} alt="Portrait of Rohaizad Johari" width={144} height={144} class="size-[72px] shrink-0 rounded-full object-cover" loading="eager" />
@@ -79,7 +79,7 @@ const wrap = 'mx-auto max-w-[1440px] px-5 md:px-20';
 
     {/* Stats */}
     <section aria-label="Key numbers">
-      <div class:list={[wrap, 'grid grid-cols-2 gap-x-4 gap-y-10 py-12 md:grid-cols-4 md:gap-6 md:py-20']}>
+      <div class:list={[wrap, 'grid grid-cols-2 gap-x-4 gap-y-10 pb-12 md:grid-cols-4 md:gap-6 md:pb-20']}>
         {stats.map((s) => <Stat value={s.value} label={s.label} />)}
       </div>
     </section>

@@ -132,6 +132,7 @@ function initOdometer(els: HTMLElement[]) {
   const restore = () => {
     els.forEach((el) => {
       if (el.dataset.countText) el.textContent = el.dataset.countText;
+      delete el.dataset.odo;
     });
   };
 
@@ -181,6 +182,25 @@ function initOdometer(els: HTMLElement[]) {
         list.push(strip);
       });
       el.appendChild(wrap);
+
+      // Dark grey gradient (Figma "Gradient Charcoal") shared across the whole number:
+      // each digit paints its own slice of one gradient so the number reads as one fill.
+      el.dataset.odo = '';
+      const totalW = widths.reduce((a, b) => a + b, 0);
+      let offset = 0;
+      list.forEach((strip, i) => {
+        const x = -(offset + (widths[i] - strip.offsetWidth) / 2);
+        strip.querySelectorAll<HTMLElement>('span').forEach((d) => {
+          d.style.backgroundImage = 'var(--gradient-charcoal)';
+          d.style.backgroundRepeat = 'no-repeat';
+          d.style.backgroundSize = `${totalW}px ${lh}px`;
+          d.style.backgroundPosition = `${x}px 0`;
+          d.style.setProperty('-webkit-background-clip', 'text');
+          d.style.backgroundClip = 'text';
+          d.style.color = 'transparent';
+        });
+        offset += widths[i];
+      });
 
       const digits = [...text].map(Number);
       // Before the first play every digit rests on 0; afterwards on its real value.

@@ -153,3 +153,59 @@ html.motion [data-reveal] {
 a[data-nav][aria-current='true'] {
   color: var(--color-accent);
 }
+
+/* Registered so gradient stops can transition (Project Row hover text). */
+@property --c1 { syntax: '<color>'; inherits: false; initial-value: #000; }
+@property --c2 { syntax: '<color>'; inherits: false; initial-value: #000; }
+
+/* Figma paint style "Gradient Charcoal": dark grey, darkest at the bottom-left. */
+:root {
+  --gradient-charcoal: radial-gradient(ellipse 120% 220% at 0% 100%, #0b0b0d 0%, #19191f 25%, #272731 50%, #434355 100%);
+}
+.grad-charcoal {
+  background-image: var(--gradient-charcoal);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+/* Once the odometer is built, each digit paints its own slice of the gradient. */
+.grad-charcoal[data-odo] { background-image: none; }
+@media (forced-colors: active) {
+  .grad-charcoal { background: none; color: CanvasText; }
+}
+
+/* Figma paint style "Gradient Purple" (radial, #1f45e0 to #2f5bff) as a text highlight. */
+.grad-purple {
+  background-image: radial-gradient(ellipse at center, #1f45e0 0%, #2f5bff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+@media (forced-colors: active) {
+  .grad-purple { background: none; color: CanvasText; }
+}
+
+/* Primary button: Figma "Gradient Purple" (radial, #1f45e0 to #2f5bff). Figma's hover colour
+   (#1f45e0) fades in over 250ms on top, because a gradient cannot transition to a flat colour. */
+.btn-primary {
+  position: relative;
+  isolation: isolate;
+  background-image: radial-gradient(ellipse at center, #1f45e0 0%, #2f5bff 100%);
+}
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: #1f45e0;
+  opacity: 0;
+  transition: opacity 250ms ease-out;
+}
+.btn-primary:hover::before,
+.btn-primary:focus-visible::before { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary::before { transition: none; }
+}
