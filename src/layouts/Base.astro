@@ -44,6 +44,17 @@ const { title, description } = Astro.props;
   <body>
     <div id="scroll-progress" aria-hidden="true" class="pointer-events-none fixed inset-x-0 top-0 z-[60] h-[3px] origin-left scale-x-0 bg-accent"></div>
     <slot />
+    <script is:inline>
+      // Media protection (deterrent only): no right-click, drag-out or long-press save on images and video.
+      (function () {
+        var media = 'img,picture,video,canvas';
+        document.addEventListener('contextmenu', function (e) { if (e.target.closest && e.target.closest(media + ',figure')) e.preventDefault(); });
+        document.addEventListener('dragstart', function (e) { if (e.target.closest && e.target.closest(media)) e.preventDefault(); });
+        document.addEventListener('keydown', function (e) {
+          if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S')) e.preventDefault();
+        });
+      })();
+    </script>
     <script>
       import { initMotion } from '../scripts/motion';
       initMotion();

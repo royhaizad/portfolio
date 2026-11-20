@@ -10,12 +10,17 @@ const links = [
   { label: 'About', href: url('/#about') },
   { label: 'Contact', href: url('/#contact') },
 ];
+interface Props { hideAvatar?: boolean }
+// Home only: the avatar waits until the hero portrait has scrolled away (motion.ts, section 9).
+const { hideAvatar = false } = Astro.props;
 ---
 
 <header class="fixed inset-x-0 top-0 z-50 border-b border-line bg-canvas/90 backdrop-blur">
   <div class="mx-auto flex h-[72px] max-w-[1440px] items-center justify-between px-5 md:h-[88px] md:px-20">
-    <a href={url('/')} class="flex items-center gap-3 whitespace-nowrap font-display text-[22px] font-semibold leading-[1.2] tracking-[-0.01em] md:text-[28px]">
-      <Image src={img('profile/portrait.png')} alt="" width={96} height={96} loading="eager" class="size-10 shrink-0 rounded-full object-cover md:size-12" />
+    <a href={url('/')} class="flex min-h-[44px] items-center whitespace-nowrap font-display text-[22px] font-semibold leading-[1.2] tracking-[-0.01em] md:text-[28px]">
+      <span data-nav-avatar-wrap data-avatar-hidden={hideAvatar ? "" : undefined} class="flex shrink-0 items-center pr-3">
+        <Image src={img('profile/portrait.png')} alt="" width={96} height={96} loading="eager" class="size-10 shrink-0 rounded-full object-cover md:size-12" />
+      </span>
       Rohaizad Johari
     </a>
 

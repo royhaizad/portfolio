@@ -1,0 +1,62 @@
+---
+import { Image, getImage } from 'astro:assets';
+import { img, url } from '../lib/data';
+// A framed video (muted loop that plays only while on screen) or a still, for motion/social pages.
+// Videos live in public/video, posters in assets (optimised). Native controls stay available for sound.
+interface Props {
+  kind?: 'video' | 'image';
+  src?: string; // public path, e.g. "video/clip.mp4"
+  poster: string; // asset path, e.g. "work/cbp/clip.webp"
+  ratio?: string; // CSS aspect ratio, e.g. "1/1" or "4/5"
+  alt: string;
+  caption?: string;
+  priority?: boolean;
+  /** Cap the width for square/portrait media in a one-column layout. */
+  maxWidth?: string;
+}
+const { kind = 'video', src, poster, ratio = '16/9', alt, caption, priority = false, maxWidth } = Astro.props;
+const posterImg = img(poster);
+const posterUrl = kind === 'video' ? (await getImage({ src: posterImg, width: 1080, format: 'webp' })).src : '';
+---
+
+<figure data-reveal class="flex flex-col gap-3" style={maxWidth ? `max-width:${maxWidth};margin-inline:auto;width:100%` : undefined}>
+  <div class="overflow-hidden rounded-md border border-line bg-ink shadow-card-rest" style={`aspect-ratio:${ratio.replace('/', ' / ')}`}>
+    {kind === 'video' && src ? (
+      <video
+        data-motion-video
+        class="block size-full object-cover"
+        src={url(`/${src}`)}
+        poster={posterUrl}
+        muted
+        loop
+        playsinline
+        controls
+        controlslist="nodownload noremoteplayback"
+        disablepictureinpicture
+        disableremoteplayback
+        preload={priority ? 'auto' : 'none'}
+        aria-label={alt}
+      ></video>
+    ) : (
+      <Image src={posterImg} alt={alt} widths={[480, 720, 1080]} sizes="(min-width: 768px) 560px, 100vw" loading={priority ? 'eager' : 'lazy'} class="block size-full object-cover" />
+    )}
+  </div>
+  {caption && <figcaption class="text-[14px] leading-[1.55] text-ink-2 md:text-[15px]">{caption}</figcaption>}
+</figure>
+
+<script>
+  // Play while at least half visible, pause otherwise; do not autoplay for reduced motion.
+  const vids = document.querySelectorAll<HTMLVideoElement>('video[data-motion-video]');
+  if (vids.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const io = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          const v = e.target as HTMLVideoElement;
+          if (e.isIntersecting) v.play().catch(() => {});
+          else v.pause();
+        }),
+      { threshold: 0.5 },
+    );
+    vids.forEach((v) => io.observe(v));
+  }
+</script>

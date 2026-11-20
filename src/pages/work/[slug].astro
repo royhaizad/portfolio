@@ -10,6 +10,7 @@ import Lines from '../../components/Lines.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import ProcessStep from '../../components/ProcessStep.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
+import MotionMedia from '../../components/MotionMedia.astro';
 import DeviceFrame from '../../components/DeviceFrame.astro';
 import ListItem from '../../components/ListItem.astro';
 import Insight from '../../components/Insight.astro';
@@ -28,6 +29,8 @@ const isFull = p.template === 'full';
 const next = projects.find((x) => x.slug === p.next)!;
 const hideDecisions = (p.hiddenSections as string[]).includes('Decisions');
 
+const heroVideo = (p as any).heroVideo as { src: string; ratio: string; caption?: string } | undefined;
+const media = ((p as any).media ?? []) as { kind: 'video' | 'image'; src?: string; poster: string; ratio: string; caption: string }[];
 const heroKind = (p as any).heroFrame === 'video' ? 'video' : 'browser';
 const wrap = 'mx-auto max-w-[1440px] px-5 md:px-20';
 const section = 'flex flex-col gap-10 py-20 md:gap-16 md:py-40';
@@ -42,8 +45,8 @@ const nextTags = (next.featured?.tags ?? next.tags.slice(0, 3)) as any[];
   <main class="pt-[73px] md:pt-[89px]">
     {/* Mobile/tablet: back bar sticks under the fixed nav until the footer (end of main) */}
     <div class="sticky top-[73px] z-40 border-b border-line bg-canvas/90 backdrop-blur md:top-[89px] lg:hidden">
-      <div class:list={[wrap, 'py-4']}>
-        <a href={url("/#projects")} class="group inline-flex w-fit items-center gap-2 text-[16px] font-semibold md:text-[18px]">
+      <div class:list={[wrap, 'py-2']}>
+        <a href={url("/#projects")} class="group inline-flex min-h-[44px] w-fit items-center gap-2 text-[16px] font-semibold md:text-[18px]">
           <Icon name="arrow-left" size={20} class="transition-transform duration-250 group-hover:-translate-x-1" />
           All work
         </a>
@@ -83,12 +86,24 @@ const nextTags = (next.featured?.tags ?? next.tags.slice(0, 3)) as any[];
     {/* Hero media */}
     <section aria-label="Hero screen">
       <div class:list={[wrap, 'pb-20 md:pb-40']}>
-        <DeviceFrame
-          kind={heroKind}
-          image={p.hero}
-          alt={heroKind === 'video' ? `${p.title}: video poster frame` : `${p.title}: hero screen of the delivered design`}
-          priority
-        />
+        {heroVideo ? (
+          <MotionMedia
+            src={heroVideo.src}
+            poster={p.hero}
+            ratio={heroVideo.ratio}
+            alt={`${p.title}: ${heroVideo.caption ?? 'video'}`}
+            caption={heroVideo.caption}
+            maxWidth={heroVideo.ratio === '16/9' ? undefined : heroVideo.ratio === '4/5' ? '560px' : '720px'}
+            priority
+          />
+        ) : (
+          <DeviceFrame
+            kind={heroKind}
+            image={p.hero}
+            alt={heroKind === 'video' ? `${p.title}: video poster frame` : `${p.title}: hero screen of the delivered design`}
+            priority
+          />
+        )}
       </div>
     </section>
 
@@ -162,6 +177,19 @@ const nextTags = (next.featured?.tags ?? next.tags.slice(0, 3)) as any[];
           </section>
         )}
       </>
+    )}
+
+    {media.length > 0 && (
+      <section class="dotted-grid">
+        <div class:list={[wrap, section]}>
+          <SectionHeader overline="Work" heading={(p as any).mediaHeading ?? 'Selected work'} />
+          <div class="grid gap-6 md:grid-cols-2 md:gap-8">
+            {media.map((m) => (
+              <MotionMedia kind={m.kind} src={m.src} poster={m.poster} ratio={m.ratio} alt={`${p.title}: ${m.caption}`} caption={m.caption} />
+            ))}
+          </div>
+        </div>
+      </section>
     )}
 
     {!isFull && snap && (

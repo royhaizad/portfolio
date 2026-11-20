@@ -31,7 +31,7 @@
       "tags": [
         {
           "type": "Lead",
-          "label": "Lead the project"
+          "label": "Lead the design"
         },
         {
           "type": "Launched",
@@ -43,7 +43,7 @@
         },
         {
           "type": "Responsive",
-          "label": "Responsive"
+          "label": "Responsive Coordinator"
         },
         {
           "type": "Design System",
@@ -107,7 +107,7 @@
         "tags": [
           {
             "type": "Lead",
-            "label": "Lead the project"
+            "label": "Lead the design"
           },
           {
             "type": "Launched",
@@ -144,7 +144,7 @@
         },
         {
           "type": "Responsive",
-          "label": "Responsive"
+          "label": "Responsive Coordinator"
         },
         {
           "type": "Industry",
@@ -229,7 +229,7 @@
       "tags": [
         {
           "type": "Lead",
-          "label": "Lead the project"
+          "label": "Lead the design"
         },
         {
           "type": "Launched",
@@ -245,7 +245,7 @@
         },
         {
           "type": "Responsive",
-          "label": "Responsive"
+          "label": "Responsive Coordinator"
         },
         {
           "type": "Design System",
@@ -313,7 +313,7 @@
         "tags": [
           {
             "type": "Lead",
-            "label": "Lead the project"
+            "label": "Lead the design"
           },
           {
             "type": "Launched",
@@ -321,7 +321,7 @@
           },
           {
             "type": "Responsive",
-            "label": "Responsive"
+            "label": "Responsive Coordinator"
           }
         ]
       },
@@ -346,7 +346,7 @@
       "tags": [
         {
           "type": "Responsive",
-          "label": "Responsive"
+          "label": "Responsive Coordinator"
         },
         {
           "type": "Launched",
@@ -484,7 +484,7 @@
       "tags": [
         {
           "type": "Responsive",
-          "label": "Responsive"
+          "label": "Responsive Coordinator"
         },
         {
           "type": "Launched",
@@ -612,11 +612,11 @@
       "tags": [
         {
           "type": "Lead",
-          "label": "Lead the project"
+          "label": "Lead the design"
         },
         {
           "type": "Responsive",
-          "label": "Responsive"
+          "label": "Responsive Coordinator"
         },
         {
           "type": "Industry",
@@ -1014,10 +1014,10 @@
         }
       ],
       "live": [],
-      "hero": "screenshots/s15_poster.png",
+      "hero": "work/cbp/cbp-jan-poster.webp",
       "heroFrame": "video",
       "showcase": [],
-      "cardImage": "screenshots/s15_poster.png",
+      "cardImage": "work/cbp/cbp-jan-poster.webp",
       "template": "snapshot",
       "row": {
         "number": "15",
@@ -1029,7 +1029,41 @@
         "sector": "Marketing"
       },
       "next": "studio-festive-greeting-video",
-      "hiddenSections": []
+      "hiddenSections": [],
+      "heroVideo": {
+        "src": "video/cbp-new-year-2024.mp4",
+        "ratio": "1/1",
+        "caption": "Selamat Tahun Baru 2024: new year greeting animation"
+      },
+      "mediaHeading": "Selected posts",
+      "media": [
+        {
+          "kind": "video",
+          "src": "video/cbp-national-day-2023.mp4",
+          "poster": "work/cbp/cbp-aug-poster.webp",
+          "ratio": "1/1",
+          "caption": "Hari Kebangsaan 2023: national day greeting"
+        },
+        {
+          "kind": "video",
+          "src": "video/cbp-takaful-explainer.mp4",
+          "poster": "work/cbp/cbp-feb-poster.webp",
+          "ratio": "1/1",
+          "caption": "Takaful explainer: animated insurance explainer"
+        },
+        {
+          "kind": "image",
+          "poster": "work/cbp/wesak-2024.webp",
+          "ratio": "1/1",
+          "caption": "Hari Wesak 2024 greeting"
+        },
+        {
+          "kind": "image",
+          "poster": "work/cbp/hello-cbp-campaign.webp",
+          "ratio": "1/1",
+          "caption": "Campaign post: prize giveaway"
+        }
+      ]
     },
     {
       "case": "16",
@@ -1066,10 +1100,10 @@
         }
       ],
       "live": [],
-      "hero": "screenshots/s16_poster.png",
+      "hero": "work/cbp/raya-poster.webp",
       "heroFrame": "video",
       "showcase": [],
-      "cardImage": "screenshots/s16_poster.png",
+      "cardImage": "work/cbp/raya-poster.webp",
       "template": "snapshot",
       "row": {
         "number": "16",
@@ -1081,7 +1115,12 @@
         "sector": "Design studio"
       },
       "next": "ecological-network-website-revamp",
-      "hiddenSections": []
+      "hiddenSections": [],
+      "heroVideo": {
+        "src": "video/seetru-raya-2026.mp4",
+        "ratio": "4/5",
+        "caption": "Selamat Hari Raya Aidilfitri greeting video"
+      }
     }
   ]
 }

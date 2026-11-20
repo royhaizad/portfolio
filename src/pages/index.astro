@@ -52,7 +52,7 @@ const wrap = 'mx-auto max-w-[1440px] px-5 md:px-20';
   title="Rohaizad Johari · UI/UX Designer, Kuala Lumpur"
   description="UI/UX designer with 7 years in design. Responsive, research-backed interfaces and scalable design systems for government and enterprise."
 >
-  <Nav />
+  <Nav hideAvatar />
   <main class="pt-[73px] md:pt-[89px]">
     {/* Hero */}
     <section class="dotted-grid">
@@ -62,10 +62,10 @@ const wrap = 'mx-auto max-w-[1440px] px-5 md:px-20';
           UI/UX Designer · Kuala Lumpur, Malaysia
         </p>
         <h1 class="grad-charcoal w-fit font-display text-[56px] font-extrabold leading-[1.08] tracking-[-0.035em] md:text-[100px]">
-          <span class="grad-purple">Clarity</span> for<br class="hidden md:inline" /><span class="md:hidden"> </span>complex systems.
+          <span class="grad-purple" data-roll>Clarity</span> for<br class="hidden md:inline" /><span class="md:hidden"> </span>complex systems.
         </h1>
         <div class="flex flex-col gap-8 md:flex-row md:items-start md:gap-10">
-          <Image src={img('profile/portrait.png')} alt="Portrait of Rohaizad Johari" width={144} height={144} class="size-[72px] shrink-0 rounded-full object-cover" loading="eager" />
+          <Image data-hero-portrait src={img('profile/portrait.png')} alt="Portrait of Rohaizad Johari" width={144} height={144} class="size-[72px] shrink-0 rounded-full object-cover shadow-float" loading="eager" />
           <p class="max-w-[720px] text-[18px] leading-[1.5] tracking-[-0.005em] md:text-[22px]">
             A UI/UX designer with 7 years in design. I turn complex requirements into responsive, research-backed interfaces, and build the design systems that keep them consistent.
           </p>
@@ -104,6 +104,7 @@ const wrap = 'mx-auto max-w-[1440px] px-5 md:px-20';
               meta={p.featured!.meta}
               description={p.featured!.description}
               tags={p.featured!.tags as any}
+              glow
             />
           ))}
         </div>

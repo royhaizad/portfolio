@@ -183,6 +183,8 @@ a[data-nav][aria-current='true'] {
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }
+/* Once the letter odometer is built, each letter paints its own slice of the gradient. */
+.grad-purple[data-odo] { background-image: none; }
 @media (forced-colors: active) {
   .grad-purple { background: none; color: CanvasText; }
 }
@@ -209,3 +211,29 @@ a[data-nav][aria-current='true'] {
 @media (prefers-reduced-motion: reduce) {
   .btn-primary::before { transition: none; }
 }
+
+/* Live dot grid (desktop, motion.ts section "initDotReveal"): a canvas replaces the static dots
+   and keeps the same top/bottom fade. Below 1024px the static ::before grid is untouched. */
+.dot-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 160px, #000 calc(100% - 160px), transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 160px, #000 calc(100% - 160px), transparent);
+}
+.dotted-grid.dot-live::before { display: none; }
+
+/* Home nav avatar: collapsed (no width, no gap) until the hero portrait scrolls away. Only while html.motion
+   is set, so reduced-motion, no-JS and the failsafe all just show it. motion.ts animates it in and out. */
+html.motion [data-nav-avatar-wrap][data-avatar-hidden] { width: 0; padding-right: 0; overflow: hidden; }
+html.motion [data-nav-avatar-wrap][data-avatar-hidden] img { opacity: 0; transform: scale(0.2); }
+
+/* Media protection (deterrent only): images cannot be dragged, selected, long-press saved or right-click
+   saved. pointer-events:none sends clicks to the surrounding link/card, so nothing else changes. */
+img, picture, video, canvas, svg image {
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+img { pointer-events: none; }

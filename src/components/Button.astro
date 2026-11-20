@@ -21,7 +21,9 @@ const styles = {
     ? 'border border-neutral-700 text-on-inverse hover:bg-neutral-0 hover:text-ink'
     : 'border border-line text-ink hover:bg-ink hover:text-on-inverse hover:border-ink',
 }[variant];
-const rotates = icon?.startsWith('arrow-');
+// Down arrow nudges down and keeps facing down; other arrows rotate 45deg on hover.
+const nudgesDown = icon === 'arrow-down';
+const rotates = icon?.startsWith('arrow-') && !nudgesDown;
 const attrs = { ...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {}), ...(download ? { download: '' } : {}) };
 const Tag = href ? 'a' : 'button';
 ---
@@ -29,6 +31,6 @@ const Tag = href ? 'a' : 'button';
 <Tag class:list={[base, styles, cls]} href={href} {...attrs}>
   <span>{label}</span>
   {icon && (
-    <Icon name={icon} size={20} class:list={['transition-transform duration-250', rotates && 'group-hover:rotate-45']} />
+    <Icon name={icon} size={20} class:list={['transition-transform duration-250', rotates && 'group-hover:rotate-45', nudgesDown && 'group-hover:translate-y-1']} />
   )}
 </Tag>
