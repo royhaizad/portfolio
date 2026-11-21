@@ -4,11 +4,12 @@ import type { TagType } from '../lib/data';
 interface Props { type: TagType; label: string }
 const { type, label } = Astro.props;
 
-// Tool tags show the app's real logo. Tools without a logo file (FigJam, Magnific)
+// Tool tags show the app's real logo. Tools without a logo file (Magnific)
 // show no icon at all rather than a generic one.
 const logos = import.meta.glob('../assets/tool-logos/*.svg', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
 const toolLogo: Record<string, string> = {
   Figma: 'figma',
+  FigJam: 'figma',
   Miro: 'miro',
   'Adobe XD': 'adobe-xd',
   'After Effects': 'adobe-after-effects',
@@ -21,6 +22,7 @@ const toolLogo: Record<string, string> = {
   ChatGPT: 'chatgpt',
   Gemini: 'gemini',
   'Microsoft Teams': 'microsoft-teams',
+  'Google Workspace': 'google',
 };
 
 const map: Record<TagType, { icon?: string; cls: string }> = {
