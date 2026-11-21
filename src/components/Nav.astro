@@ -65,16 +65,87 @@ const { hideAvatar = false } = Astro.props;
 </header>
 
 <script>
+  import gsap from 'gsap';
+
   const toggle = document.getElementById('menu-toggle') as HTMLButtonElement | null;
   const menu = document.getElementById('mobile-menu');
+  const reduce = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let isOpen = false;
+
+  const items = () => (menu ? Array.from(menu.querySelectorAll('nav a, p, a[class*="w-full"]')) : []);
+
   const setOpen = (open: boolean) => {
-    if (!toggle || !menu) return;
-    menu.classList.toggle('hidden', !open);
+    if (!toggle || !menu || open === isOpen) return;
+    isOpen = open;
     toggle.setAttribute('aria-expanded', String(open));
     toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    gsap.killTweensOf([menu, ...items()]);
+    if (open) {
+      menu.classList.remove('hidden');
+      if (reduce()) return;
+      gsap.fromTo(menu, { yPercent: -4, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.35, ease: 'power3.out' });
+      gsap.fromTo(items(), { y: -12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: 'power3.out', stagger: 0.05, delay: 0.05, clearProps: 'transform,opacity' });
+    } else {
+      const done = () => {
+        menu.classList.add('hidden');
+        gsap.set(menu, { clearProps: 'transform,opacity' });
+      };
+      if (reduce()) return done();
+      // Continue from wherever a swipe left the panel.
+      gsap.to(menu, { y: Math.min(Number(gsap.getProperty(menu, 'y')) || 0, -menu.offsetHeight * 0.5), opacity: 0, duration: 0.28, ease: 'power2.in', onComplete: done });
+    }
   };
+
   toggle?.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
   menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
   document.addEventListener('keydown', (e) => e.key === 'Escape' && setOpen(false));
-</script>
 
+  // Swipe up anywhere while the menu is open to close it. The panel follows the finger, then either
+  // flies away (distance or flick speed) or springs back.
+  if (menu) {
+    let startY = 0;
+    let startX = 0;
+    let startT = 0;
+    let dy = 0;
+    let dragging = false;
+    let locked = false; // gesture decided to be horizontal or a scroll, ignore it
+
+    document.addEventListener('touchstart', (e) => {
+      if (!isOpen || e.touches.length !== 1) return;
+      startY = e.touches[0].clientY;
+      startX = e.touches[0].clientX;
+      startT = performance.now();
+      dy = 0;
+      dragging = false;
+      locked = false;
+      gsap.killTweensOf(menu);
+    }, { passive: true });
+
+    document.addEventListener('touchmove', (e) => {
+      if (!isOpen || locked) return;
+      const y = e.touches[0].clientY - startY;
+      const x = e.touches[0].clientX - startX;
+      if (!dragging) {
+        if (Math.abs(x) > Math.abs(y) || y > 0) { if (Math.abs(x) > 8 || y > 8) locked = true; return; }
+        if (Math.abs(y) < 8) return;
+        dragging = true;
+      }
+      e.preventDefault();
+      dy = Math.min(0, y);
+      gsap.set(menu, { y: dy, opacity: 1 + dy / (menu.offsetHeight * 1.2) });
+    }, { passive: false });
+
+    const end = () => {
+      if (!dragging) return;
+      dragging = false;
+      const speed = Math.abs(dy) / Math.max(1, performance.now() - startT); // px per ms
+      if (Math.abs(dy) > 70 || speed > 0.5) {
+        setOpen(false);
+      } else {
+        gsap.to(menu, { y: 0, opacity: 1, duration: 0.45, ease: 'elastic.out(1, 0.6)', clearProps: 'transform,opacity' });
+      }
+    };
+    document.addEventListener('touchend', end);
+    document.addEventListener('touchcancel', end);
+  }
+</script>
