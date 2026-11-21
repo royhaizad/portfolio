@@ -26,6 +26,7 @@ const { title, description } = Astro.props;
     <meta property="og:image:alt" content="Rohaizad Johari, UI/UX Designer, Kuala Lumpur, Malaysia" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={new URL(url('/og.png'), Astro.site).href} />
+    {import.meta.env.BASE_URL !== '/portfolio' && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href} />
     <link rel="icon" type="image/png" sizes="64x64" href={url('/favicon-64.png')} />
     <link rel="apple-touch-icon" href={url('/apple-touch-icon.png')} />

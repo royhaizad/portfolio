@@ -1,8 +1,11 @@
 name: Deploy to GitHub Pages
 
+# One Pages site per repo, so both branches build into a single artifact:
+#   main   -> /portfolio/
+#   remote -> /portfolio/remote/  (noindex preview)
 on:
   push:
-    branches: [main]
+    branches: [main, remote]
   workflow_dispatch:
 
 permissions:
@@ -18,12 +21,40 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout main
         uses: actions/checkout@v5
-      - name: Build with Astro
-        uses: withastro/action@v5
+        with:
+          ref: main
+          path: main
+      - name: Checkout remote
+        uses: actions/checkout@v5
+        with:
+          ref: remote
+          path: remote
+      - uses: actions/setup-node@v5
         with:
           node-version: 24
+          cache: npm
+          cache-dependency-path: |
+            main/package-lock.json
+            remote/package-lock.json
+      - name: Build main
+        working-directory: main
+        run: npm ci && npm run build
+      - name: Build remote preview
+        working-directory: remote
+        env:
+          BASE_PATH: /portfolio/remote
+        run: npm ci && npm run build
+      - name: Combine
+        run: |
+          mkdir site
+          cp -r main/dist/. site/
+          mkdir site/remote
+          cp -r remote/dist/. site/remote/
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: site
 
   deploy:
     needs: build
