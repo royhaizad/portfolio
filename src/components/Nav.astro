@@ -16,7 +16,7 @@ const { hideAvatar = false } = Astro.props;
 ---
 
 <header class="fixed inset-x-0 top-0 z-50 border-b border-line bg-canvas/90 backdrop-blur">
-  <div class="mx-auto flex h-[72px] max-w-[1440px] items-center justify-between px-5 md:h-[88px] md:px-20">
+  <div class="relative z-10 mx-auto flex h-[72px] max-w-[1440px] items-center justify-between bg-canvas px-5 md:h-[88px] md:px-20">
     <a href={url('/')} class="flex min-h-[44px] items-center whitespace-nowrap font-display text-[22px] font-semibold leading-[1.2] tracking-[-0.01em] md:text-[28px]">
       <span data-nav-avatar-wrap data-avatar-hidden={hideAvatar ? "" : undefined} class="flex shrink-0 items-center pr-3">
         <Image src={img('profile/portrait.png')} alt="" width={96} height={96} loading="eager" class="size-10 shrink-0 rounded-full object-cover md:size-12" />
@@ -50,7 +50,7 @@ const { hideAvatar = false } = Astro.props;
     </button>
   </div>
 
-  <div id="mobile-menu" class="hidden border-t border-line bg-canvas px-5 pb-8 pt-4 xl:!hidden">
+  <div id="mobile-menu" class="relative z-0 hidden border-t border-line bg-canvas px-5 pb-8 pt-4 xl:!hidden">
     <nav aria-label="Mobile" class="flex flex-col">
       {links.map((l) => (
         <a href={l.href} data-nav={l.href.split("#")[1]} class="border-b border-line py-4 font-display text-[28px] font-semibold tracking-[-0.01em]">{l.label}</a>
