@@ -237,3 +237,7 @@ img, picture, video, canvas, svg image {
   -webkit-touch-callout: none;
 }
 img { pointer-events: none; }
+
+/* Layered parallax (motion.ts initParallax). GSAP drives --py on scroll; the separate
+   `translate` property composes with the reveal and entrance tweens, which use `transform`. */
+[data-parallax] { translate: 0 var(--py, 0px); }

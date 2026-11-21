@@ -27,6 +27,9 @@ export function initMotion() {
     initDotReveal(gsap.utils.toArray<HTMLElement>('.dotted-grid')),
   );
 
+  // Layered parallax: tablet and desktop only (768px+), never with reduced motion.
+  mm.add('(min-width: 768px) and (prefers-reduced-motion: no-preference)', () => initParallax());
+
   mm.add('(prefers-reduced-motion: no-preference)', () => {
     (window as any).__motionReady = true;
 
@@ -674,5 +677,55 @@ function initOdometer(els: HTMLElement[]) {
     trigger?.kill();
     gsap.killTweensOf(strips.flatMap((s) => s.list));
     restore();
+  };
+}
+
+/**
+ * Layered parallax, scrubbed to scroll. Elements carry data-parallax="px": positive values lag
+ * behind the scroll (feel further back), negative values run ahead (feel closer).
+ *   data-parallax-mode="exit"  0 to value while the section scrolls away (hero)
+ *   default                    -value/2 to +value/2 as the section crosses the viewport
+ * Only the --py variable animates; CSS turns it into the `translate` property.
+ * Project cards: the picture and its light layer share one wrapper that drifts inside the frame.
+ */
+function initParallax() {
+  const tweens: gsap.core.Tween[] = [];
+
+  gsap.utils.toArray<HTMLElement>('[data-parallax]').forEach((el) => {
+    const v = parseFloat(el.dataset.parallax || '0');
+    if (!v) return;
+    const exit = el.dataset.parallaxMode === 'exit';
+    const trigger = el.closest('section') ?? el;
+    tweens.push(
+      gsap.fromTo(
+        el,
+        { '--py': `${exit ? 0 : -v / 2}px` },
+        {
+          '--py': `${exit ? v : v / 2}px`,
+          ease: 'none',
+          scrollTrigger: { trigger, start: exit ? 'top top' : 'top bottom', end: 'bottom top', scrub: 0.4 },
+        },
+      ),
+    );
+  });
+
+  gsap.utils.toArray<HTMLElement>('#work [data-card-parallax]').forEach((layer) => {
+    const card = layer.closest('a') ?? layer;
+    tweens.push(
+      gsap.fromTo(
+        layer,
+        { yPercent: -7, scale: 1.16 },
+        { yPercent: 7, scale: 1.16, ease: 'none', scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: 0.4 } },
+      ),
+    );
+  });
+
+  return () => {
+    tweens.forEach((t) => {
+      t.scrollTrigger?.kill();
+      t.kill();
+    });
+    gsap.set('[data-parallax]', { clearProps: '--py' });
+    gsap.set('[data-card-parallax]', { clearProps: 'transform' });
   };
 }

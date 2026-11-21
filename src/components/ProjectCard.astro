@@ -40,25 +40,27 @@ const glowMask = glow ? `/glow/${cardImage.split('/').pop()!.replace('mockup', '
   class="group flex flex-col overflow-hidden rounded-lg border border-line bg-surface shadow-card-rest transition-shadow duration-[400ms] hover:shadow-card-hover"
 >
   <div class="relative overflow-hidden bg-surface-alt">
-    <Image
-      src={img(cardImage)}
-      alt={`${title.replace('⏎', ' ')}: desktop and mobile screens`}
-      widths={[640, 960, 1280]}
-      sizes={featured ? '(min-width: 1280px) 1280px, 100vw' : '(min-width: 768px) 640px, 100vw'}
-      class="aspect-[16/9] w-full object-cover transition-transform duration-[400ms] ease-out group-hover:scale-105"
-    />
-    {glowMask && (
-      <div
-        data-glow
-        aria-hidden="true"
-        class="glow pointer-events-none absolute inset-0 transition-transform duration-[400ms] ease-out group-hover:scale-105"
-        style={`--glow-mask:url(${url(glowMask)})`}
-      >
-        <span class="glow-blob" style={`left:-5%;top:-15%;width:70%;aspect-ratio:1;--c:${n1}`}></span>
-        <span class="glow-blob" style={`right:-10%;bottom:-25%;width:75%;aspect-ratio:1;--c:${n2}`}></span>
-        <span class="glow-blob" style={`left:30%;top:20%;width:50%;aspect-ratio:1;--c:${n3}`}></span>
-      </div>
-    )}
+    <div data-card-parallax class="relative">
+      <Image
+        src={img(cardImage)}
+        alt={`${title.replace('⏎', ' ')}: desktop and mobile screens`}
+        widths={[640, 960, 1280]}
+        sizes={featured ? '(min-width: 1280px) 1280px, 100vw' : '(min-width: 768px) 640px, 100vw'}
+        class="aspect-[16/9] w-full object-cover transition-transform duration-[400ms] ease-out group-hover:scale-105"
+      />
+      {glowMask && (
+        <div
+          data-glow
+          aria-hidden="true"
+          class="glow pointer-events-none absolute inset-0 transition-transform duration-[400ms] ease-out group-hover:scale-105"
+          style={`--glow-mask:url(${url(glowMask)})`}
+        >
+          <span class="glow-blob" style={`left:-5%;top:-15%;width:70%;aspect-ratio:1;--c:${n1}`}></span>
+          <span class="glow-blob" style={`right:-10%;bottom:-25%;width:75%;aspect-ratio:1;--c:${n2}`}></span>
+          <span class="glow-blob" style={`left:30%;top:20%;width:50%;aspect-ratio:1;--c:${n3}`}></span>
+        </div>
+      )}
+    </div>
     {showNumber && (
       <span class="absolute left-4 top-4 grid h-10 min-w-10 place-items-center rounded-full bg-surface px-3 text-[14px] font-semibold md:left-6 md:top-6">{number}</span>
     )}
