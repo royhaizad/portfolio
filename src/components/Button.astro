@@ -8,9 +8,10 @@ interface Props {
   external?: boolean;
   download?: boolean;
   inverse?: boolean; // ghost on dark surface
+  iconOnly?: boolean; // round icon button, label becomes the accessible name
   class?: string;
 }
-const { label, href, icon, variant = 'primary', external = false, download = false, inverse = false, class: cls = '' } = Astro.props;
+const { label, href, icon, variant = 'primary', external = false, download = false, inverse = false, iconOnly = false, class: cls = '' } = Astro.props;
 
 const base =
   'group inline-flex items-center justify-center gap-2 rounded-full px-6 py-4 text-[16px] md:text-[18px] font-semibold leading-[1.6] tracking-[-0.0025em] transition-[background,color,gap,border-color] duration-250 ease-out hover:gap-3';
@@ -28,8 +29,14 @@ const attrs = { ...(external ? { target: '_blank', rel: 'noopener noreferrer' } 
 const Tag = href ? 'a' : 'button';
 ---
 
-<Tag class:list={[base, styles, cls]} href={href} {...attrs}>
-  <span>{label}</span>
+<Tag
+  class:list={[base, styles, iconOnly && 'size-14 !p-0 hover:!gap-2', cls]}
+  href={href}
+  aria-label={iconOnly ? label : undefined}
+  title={iconOnly ? label : undefined}
+  {...attrs}
+>
+  {!iconOnly && <span>{label}</span>}
   {icon && (
     <Icon name={icon} size={20} class:list={['transition-transform duration-250', rotates && 'group-hover:rotate-45', nudgesDown && 'group-hover:translate-y-1']} />
   )}
